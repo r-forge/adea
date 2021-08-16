@@ -56,7 +56,7 @@ MMM -->
 <p><b>References:</b>
 <ul>
 <li><a href="http://dx.doi.org/10.1590/0101-7438.2018.038.01.0031">Stepwise selection of variables in DEA using contribution loads. <i>Fernando Fernandez-Palacin, Maria Auxiliadora Lopez-Sanchez, Manuel Munoz-Marquez</i>. Pesquisa Operacional, <b>38</b>:1, pg. 31-52. 2018, DOI: 10.1590/0101-7438.2018.038.01.0031.</a></li>
-<li><a href="https://doi.org/10.1016/j.ejor.2020.08.021">Methodology for calculating critical values of relevance measures in variable selection methods in data envelopment analysis. <i>Jeyms Villanueva-Cantillo, Manuel Munoz-Marquez</i>. European Journal of Operational Research, 20:2, 627-670, 2021. DOI: 10.1016/j.ejor.2020.08.021.</li>
+<li><a href="https://doi.org/10.1016/j.ejor.2020.08.021">Methodology for calculating critical values of relevance measures in variable selection methods in data envelopment analysis. <i>Jeyms Villanueva-Cantillo, Manuel Munoz-Marquez</i>. European Journal of Operational Research, 20:2, 627-670, 2021. DOI: 10.1016/j.ejor.2020.08.021.</a></li>
 </ul>
 </p>
 
@@ -78,7 +78,7 @@ El paquete proporciona dos funciones para hacerlo paso a paso. </p>
 <p><b>Referencias:</b>
 <ul>
 <li><a href="http://dx.doi.org/10.1590/0101-7438.2018.038.01.0031">Stepwise selection of variables in DEA using contribution loads. <i>Fernando Fernandez-Palacin, Maria Auxiliadora Lopez-Sanchez, Manuel Munoz-Marquez</i>. Pesquisa Operacional, <b>38</b>:1, pg. 31-52. 2018, DOI: 10.1590/0101-7438.2018.038.01.0031.</a></li>
-<li><a href="https://doi.org/10.1016/j.ejor.2020.08.021">Methodology for calculating critical values of relevance measures in variable selection methods in data envelopment analysis. <i>Jeyms Villanueva-Cantillo, Manuel Munoz-Marquez</i>. European Journal of Operational Research, 20:2, 627-670, 2021. DOI: 10.1016/j.ejor.2020.08.021.</li>
+<li><a href="https://doi.org/10.1016/j.ejor.2020.08.021">Methodology for calculating critical values of relevance measures in variable selection methods in data envelopment analysis. <i>Jeyms Villanueva-Cantillo, Manuel Munoz-Marquez</i>. European Journal of Operational Research, 20:2, 627-670, 2021. DOI: 10.1016/j.ejor.2020.08.021.</a></li>
 </ul>
 </p>
 
