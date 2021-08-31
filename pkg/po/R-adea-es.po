@@ -1,0 +1,332 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: adea 0.1\n"
+"POT-Creation-Date: 2021-08-16 20:06\n"
+"PO-Revision-Date: 2021-08-31 18:13+0200\n"
+"Last-Translator: Manuel Munoz-Marquez <manuel.munoz@uca.es>\n"
+"Language-Team: Manuel Munoz-Marquez\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "adea:"
+msgstr ""
+
+msgid "eff.tolerance is not numeric a value between 0 and 1"
+msgstr "eff.tolerance no es un valor numérico entre 0 y 1"
+
+msgid ""
+"Internal error: The minimum value in first and second stage don't agree."
+msgstr ""
+"Error interno: El valor mínimo en la primera y en la segunda etapa no "
+"coinciden."
+
+msgid ""
+"input should be a numeric vector, a numeric matrix or a numeric dataframe."
+msgstr "input debe ser un vector, una matriz  o un data.frame numérico."
+
+msgid ""
+"output should be a numeric vector, a numeric matrix or a numeric dataframe."
+msgstr "output debe ser un vector, una matriz  o un data.frame numérico."
+
+msgid "NA values in input not allowed."
+msgstr "Valores NA no permitidos en input."
+
+msgid "NA values in output not allowed."
+msgstr "Valores NA no permitidos en output."
+
+msgid "Unequal number of rows in input and output."
+msgstr "Desigual número de filas en input y output."
+
+msgid "ux and vy should provided together."
+msgstr "ux y vy deben proporcionarse ambos."
+
+msgid "ux should be NULL, a vector, a matrix or a dataframe."
+msgstr "ux debe ser NULL, un vector, una matriz o un data.frame."
+
+msgid "Unequal number of rows in input and ux."
+msgstr "Desigual número de filas en input y ux."
+
+msgid "vy should be NULL, a numeric matrix or dataframe."
+msgstr "vy debe ser NULL, un vector, una matriz o un data.frame."
+
+msgid "Unequal number of rows in input and vy."
+msgstr "Desigual número de filas en input y vy."
+
+msgid "eff should be NULL or a numeric vector."
+msgstr "eff debe ser NULL o un vector numérico."
+
+msgid "Non numeric values in eff."
+msgstr "Valores no numéricos en eff."
+
+msgid "Unequal number of rows in input and eff."
+msgstr "Desigual número de filas en input y eff."
+
+msgid "load"
+msgstr ""
+
+msgid "load.diff"
+msgstr ""
+
+msgid "index"
+msgstr ""
+
+msgid "names"
+msgstr ""
+
+msgid "adea_load_leverage: nmax must be numeric >= 0"
+msgstr "adea_load_leverage: nmax debe ser un número >= 0"
+
+msgid "load.critical value should be a positive number less than 1."
+msgstr "load.critical debe ser un número positivo a lo sumo 1."
+
+msgid "Starting adea_stepwise using backward selection"
+msgstr "Iniciando adea_stepwise usando selección hacia atrás"
+
+msgid "load.critical value is"
+msgstr "El valor de load.critical es"
+
+msgid "Step %d dropping %s %s with load ratio equal to %f"
+msgstr "Paso %d eliminando %s %s con carga igual a %f"
+
+msgid "Load ratios values for current model"
+msgstr "Valores de las cargas para el modelo actual"
+
+msgid "Load ratios values for final model"
+msgstr "Valores de las cargas para el modelo final"
+
+msgid "The reason for stop was that the"
+msgstr "El motivo de la parada fue que"
+
+msgid "maximun number of steps has been reached."
+msgstr "el máximo número de pasos ha sido alcanzado."
+
+msgid "load level given has been reached."
+msgstr "el nivel de la carga dado ha sido alcanzado."
+
+msgid "Unable to solve dea model"
+msgstr "No se ha podido resolver el modelo dea"
+
+msgid "cadea:"
+msgstr ""
+
+msgid "load.min value is not numeric"
+msgstr "load.min no es de tipo numérico"
+
+msgid "The length of load.min does not match"
+msgstr "La longitud de load.min no casa"
+
+msgid "cadea: load.min"
+msgstr "cadea: load.min"
+
+msgid "is not a numeric value or vector in [0, 1)"
+msgstr "no es un valor o vector numérico en [0, 1)"
+
+msgid "load.max value is not numeric"
+msgstr "load.max no es de tipo numérico"
+
+msgid "The length of load.max does not match"
+msgstr "La longitud de load.max no casa"
+
+msgid "cadea: load.max"
+msgstr ""
+
+msgid "is not a numeric value or vector greater or equal to 1"
+msgstr "no es un valor o vector numérico mayor o igual a 1"
+
+msgid "cadea: eff.tolerance"
+msgstr ""
+
+msgid "is not a numeric value in [0, 1]"
+msgstr "no es un valor numérico en [0, 1]"
+
+msgid "orientation:"
+msgstr "orientación:"
+
+msgid "not implemented yet."
+msgstr "no implementada aún."
+
+msgid "Unable to solve adea model. Solver status is"
+msgstr "No se ha podido resolver el modelo adea. El estado del optimizador es"
+
+msgid ". ("
+msgstr ""
+
+msgid ".)"
+msgstr ""
+
+msgid "Optimal solution found"
+msgstr "Solución óptima encontrada"
+
+msgid "The model is sub-optimal"
+msgstr "El modelo es sub-óptimal"
+
+msgid "The model is infeasible"
+msgstr "El modelo es infactible"
+
+msgid "The model is unbounded"
+msgstr "Es modelo es ilimitado"
+
+msgid "The model is degenerate"
+msgstr "El modelo es degenerado"
+
+msgid "Numerical failure encountered"
+msgstr "Fallo numérico encontrado"
+
+msgid "Process aborted"
+msgstr "Proceso abortado"
+
+msgid "Timeout"
+msgstr "Tiempo agotado"
+
+msgid "The model was solved by presolve"
+msgstr "El modelo se resolvió en el preproceso"
+
+msgid "The branch and bound routine failed"
+msgstr "La rutina de ramificación y acotación falló"
+
+msgid ""
+"The branch and bound was stopped because of a break-at-first or break-at-"
+"value"
+msgstr ""
+"La rutina de ramificación y acotación paró después de la primera solución o "
+"después de alcanzar el valor"
+
+msgid "A feasible branch and bound solution was found"
+msgstr "Una solución factible de la ramificación y acotación fue encontrada"
+
+msgid "No feasible branch and bound solution was found"
+msgstr ""
+"Ninguna solución factible de la ramificación y acotación fue encontrada"
+
+msgid "Unable to solve cadea model. Solver status is"
+msgstr "No se ha podido resolver el modelo adea. El estado del optimizador es"
+
+msgid "Unable to solve dea model. Solver status is"
+msgstr "No se ha podido resolver el modelo dea. El estado del optimizador es"
+
+msgid "Load"
+msgstr "Carga"
+
+msgid "#Efficients"
+msgstr "#Eficientes"
+
+msgid "#Variables"
+msgstr "#Variables"
+
+msgid "#Inputs"
+msgstr "#Inputs"
+
+msgid "#Outputs"
+msgstr "#Outputs"
+
+msgid "Inputs"
+msgstr "Inputs"
+
+msgid "Outputs"
+msgstr "Outputs"
+
+msgid "Stop"
+msgstr "Stop"
+
+msgid "Steps"
+msgstr "Pasos"
+
+msgid "Efficiencies"
+msgstr "Eficiencias"
+
+msgid "Model name"
+msgstr "Nombre del modelo"
+
+msgid "Orientation is"
+msgstr "La orientación es"
+
+msgid "Input loads"
+msgstr "Cargas de inputs"
+
+msgid "Output loads"
+msgstr "Cargas de outputs"
+
+msgid "Model load"
+msgstr "Carga del modelo"
+
+msgid "Summary of efficiencies"
+msgstr "Resumen de las eficiencias"
+
+msgid "Summary of adea hierarchical variable selection"
+msgstr "Resumen de la selección jerárquica de variables adea"
+
+msgid "for model"
+msgstr "para modelo"
+
+msgid "Load orientation is"
+msgstr "La orientación de la carga es"
+
+msgid "Summary of adea parametric variable selection"
+msgstr "Resumen de la selección paramétrica de variables adea"
+
+msgid "Summary of adea stepwise variable selection for model"
+msgstr "Resumen de la selección paso a paso para el modelo"
+
+msgid "Model orientation"
+msgstr "Orientación del modelo"
+
+msgid "Load orientation"
+msgstr "Orientación de las cargas"
+
+msgid "Load level required"
+msgstr "Nivel de carga requerido"
+
+msgid "Stop criterion reached"
+msgstr "Criterio de parada alcanzado"
+
+msgid "Number of steps"
+msgstr "Número de pasos"
+
+msgid "Step by step report"
+msgstr "Informe paso a paso"
+
+msgid "Dropping"
+msgstr "Eliminando"
+
+#~ msgid "Efficiencies:"
+#~ msgstr "Eficiencias"
+
+#~ msgid "("
+#~ msgstr "("
+
+#~ msgid ")"
+#~ msgstr ")"
+
+#~ msgid "#Efficient"
+#~ msgstr "#Eficientes"
+
+#~ msgid "Factors"
+#~ msgstr "Factores"
+
+#~ msgid "#Factors"
+#~ msgstr "#Factores"
+
+#~ msgid "#Output"
+#~ msgstr "#Output"
+
+#~ msgid "Level"
+#~ msgstr "Nivel"
+
+#~ msgid "Inputs:"
+#~ msgstr "Inputs:"
+
+#~ msgid "Outputs:"
+#~ msgstr "Outputs:"
+
+#, fuzzy
+#~ msgid "Efficients"
+#~ msgstr "#Eficientes"
+
+#, fuzzy
+#~ msgid "Variables"
+#~ msgstr "#Variables"

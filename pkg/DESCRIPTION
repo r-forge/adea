@@ -1,0 +1,23 @@
+Package: adea
+Type: Package
+Depends:
+    Benchmarking,
+    combinat,
+    lpSolveAPI,
+    methods,
+    R (>= 3.5.0),
+    rmarkdown
+Imports:
+    knitr
+VignetteBuilder: knitr
+Version: 1.1.1
+Date: 2021-08-31
+ByteCompile: true
+Title: Another DEA Package
+Authors@R: c(person('Fernando', 'Fernandez-Palacin', email = 'fernando.fernandez@uca.es', role = 'aut', comment = c(ORCID='0000-0002-3525-2924')), person('Manuel', 'Munoz-Marquez', email = 'manuel.munoz@uca.es', role = c('aut', 'cre'), comment = c(ORCID = '0000-0003-4157-8784')))
+Maintainer: Manuel Munoz-Marquez <manuel.munoz@uca.es>
+Description: The meaning of adea is "alternate DEA". This package is devoted to provides the alternatite method of DEA described in the paper entitled "Stepwise Selection of Variables in DEA Using Contribution Load", by \emph{F. Fernandez-Palacin}, \emph{M. A. Lopez-Sanchez} and \emph{M. Munoz-Marquez}. Pesquisa Operacional 38 (1), pg. 1-24, 2018. \doi{10.1590/0101-7438.2018.038.01.0000}.
+    A full functional on-line and interactive version is available at
+    <https://knuth.uca.es/shiny/DEA/>.
+License: GPL (>= 3)
+RoxygenNote: 7.1.1
