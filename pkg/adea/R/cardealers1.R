@@ -11,7 +11,7 @@
 #' data('cardealers1')
 #' 
 #' @format 
-#' \code{Employess}: The number of employess in the car dealer to be considered as input variable in DEA.
+#' \code{Employees}: The number of employees in the car dealer to be considered as input variable in DEA.
 #' 
 #' \code{Sold}: The sold amount by the car dealer to be considered as output variable in DEA.
 #' 

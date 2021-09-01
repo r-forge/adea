@@ -54,7 +54,7 @@ adea_loads <- function(input, output, ux, vy, load.orientation = c('inoutput', '
         if (is.null(rownames(output))) rownames(output) <- rownames(input)
     }
 
-    ## Compute load ratios: normalized contribution of an input inside all inputs (or output)
+    ## Compute load ratios: normalised contribution of an input inside all inputs (or output)
     load <- list()
     if ((load.orientation == 'input') || (load.orientation == 'inoutput')) {
         load$ratios$input <- ncol(input) * colSums(ux * input) / sum(ux * input)

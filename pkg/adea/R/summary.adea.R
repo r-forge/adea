@@ -1,7 +1,7 @@
 #' summary method for adea class
 #' @aliases summary.adea
 #' @importFrom stats sd
-#' @param object is the object of class adea to summarize
+#' @param object is the object of class adea to summarise
 #' @param ... optional arguments to 'print'
 #' @method summary adea
 #' @export

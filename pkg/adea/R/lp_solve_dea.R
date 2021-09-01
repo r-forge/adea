@@ -14,7 +14,7 @@ lp_solve_dea <- function(input, output, orientation = c('input', 'output'), solv
     err <- adea.check(input, output)
     if (err != TRUE) stop(err)
     orientation <- match.arg(orientation)
-    ## Initialize values
+    ## Initialise values
     status <- NULL
     ux <- NULL
     vy <- NULL
@@ -41,7 +41,7 @@ lp_solve_dea <- function(input, output, orientation = c('input', 'output'), solv
     for (u in 1:ndmu)
         for (i in 1:ni)
             set.column(lp, (u - 1) * nio + i + no, -input[, i], seq(ndmu + u, nrow, by = ndmu))
-    ## Build normalizations
+    ## Build normalisations
     if (orientation == 'input') {
         for (u in 1:ndmu)
             for (i in 1:ni)

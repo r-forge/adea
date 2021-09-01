@@ -1,7 +1,7 @@
 #' Select an optimal subset of variables for DEA analysis
 #'
 #' Stepwise procedure for variable selection in DEA models.
-#' This is a backend function for adea_hierarchical and adea_parametric functions.
+#' This is a back end function for adea_hierarchical and adea_parametric functions.
 #' So, it is not for end user use.
 #' 
 #' @inheritParams adea
@@ -10,7 +10,7 @@
 #' @param load.critical Minimum values for load.ratios to consider that a variable should be considered in the model. It can be also a vector with two values, the first value input loads and the second for output loads.
 #' @param max.steps The maximum number of steps allowed.
 #' @param verbose Use 0 for minimal output, only final model. 1 or more to get detailed information of each step. This option affects only to printed output but not the result.
-#' @return The function returns a DEA model with optimized set of variables.
+#' @return The function returns a DEA model with optimised set of variables.
 #' @export
 adea_stepwise <- function(input, output, orientation = c('input', 'output'), load.orientation = c('inoutput', 'input', 'output'), name = '', direction = c('backward', 'backward/input', 'backward/output'), load.critical = .5, max.steps = ncol(input) + ncol(output) - 2, verbose = 0) {
     .adea <- stepwise(input = input, output = output, orientation = orientation, load.orientation = load.orientation, name = name, direction = direction, load.critical = load.critical, max.steps = max.steps, verbose = verbose)
@@ -61,7 +61,7 @@ stepwise <- function(input, output, orientation = c('input', 'output'), load.ori
                     'backward/output' = stepwisebackward(input = input, output = output, orientation = orientation, load.orientation = load.orientation, name = name, load.critical = load.critical, max.steps = max.steps, index.input = NULL, index.output = ncol(input) + 1:ncol(output), verbose = verbose)
                     )
 
-    ## Return object with resutls
+    ## Return object with results
     .adea
 }
 
@@ -69,7 +69,7 @@ stepwise <- function(input, output, orientation = c('input', 'output'), load.ori
 stepwisebackward <- function(input, output, orientation = c('input', 'output'), load.orientation = c('inoutput', 'input', 'output'), name = '', load.critical = .5, max.steps = ncol(input) + ncol(output), index.input = 1:ncol(input), index.output = 1:ncol(output), verbose = 0)
 {
 
-    ## Setup inital values
+    ## Setup initial values
     .step <- 1
     .nt <- ncol(input) + ncol(output)
     i <- .nt
@@ -194,7 +194,7 @@ stepwisebackward <- function(input, output, orientation = c('input', 'output'), 
     if (verbose > 0) {
         cat('\n', gettext('Load ratios values for final model'), ':\n')
         print(.adea$load$ratios)
-        cat(gettext("The reason for stop was that the"), ifelse(.step > max.steps, gettext('maximun number of steps has been reached.\n'), gettext('load level given has been reached.\n')))
+        cat(gettext("The reason for stop was that the"), ifelse(.step > max.steps, gettext('maximum number of steps has been reached.\n'), gettext('load level given has been reached.\n')))
     }
 
     ## Drop empty steps

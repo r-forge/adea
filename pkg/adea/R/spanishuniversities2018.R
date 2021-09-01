@@ -23,7 +23,7 @@
 #' 
 #' \code{JCR}: number of papers published in journals included in JCR index
 #' 
-#' \code{Six}: number of positive reports obtained in the state research evaluation program. All permanent teaching staff from Spanish universities can apply every six year for a program to get a positive evaluation of thieir research activities. Positive evaluations are considered merits for promotion and represent an increase in salary.
+#' \code{Six}: number of positive reports obtained in the state research evaluation program. All permanent teaching staff from Spanish universities can apply every six year for a program to get a positive evaluation of their research activities. Positive evaluations are considered merits for promotion and represent an increase in salary.
 #' 
 #' \code{Projects}: number of research projects financed with state funds obtained in competitive calls.
 #' 
@@ -36,5 +36,5 @@
 #' The output variables are: \code{TeachingStaff}, \code{FPU2018}, \code{FPI2018}, \code{Patens}, \code{PhDThesis}, \code{JCR}, \code{Six} and \code{Projects}.
 #' 
 #' @source
-#' Data are taken from public avalaible information systems. 
+#' Data are taken from public available information systems. 
 NULL

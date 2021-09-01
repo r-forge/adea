@@ -3,7 +3,7 @@
 #' For the final model of adea_stepwise function print the model name, orientation, load orientation, a summary, the input variables, and outputs variables.
 #' 
 #' @name summary.adeastepwise
-#' @param object is the object of class adeastepwise to summarize.
+#' @param object is the object of class adeastepwise to summarise.
 #' @param ... Optional arguments to "print".
 #' @method summary adeastepwise
 #' @export

@@ -39,7 +39,7 @@
 #' # Load: 0.9575672
 #' # Input loads: 1
 #' # Output loads: 1.042433 0.9575672
-#' # Summary of effiencies:
+#' # Summary of efficiencies:
 #' # Mean        sd      Min.   1st Qu.    Median   3rd Qu.      Max.
 #' # 0.9002232 0.1351949 0.6515044 0.8722527 0.9422250 0.9978982 1.0000000
 #' # Efficiencies:

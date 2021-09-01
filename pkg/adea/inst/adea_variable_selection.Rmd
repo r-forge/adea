@@ -1,0 +1,89 @@
+---
+title: "Variable selection in DEA with adea method"
+author: 
+ - Fernando Fernandez-Palacin^[Universidad de Cádiz, fernando.fernandez@uca.es]
+ - Manuel Munoz-Marquez^[Universidad de Cádiz, manuel.munoz@uca.es]
+date: "`r Sys.Date()`"
+bibliography: dea.bib
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Variable selection in DEA with adea method}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 6,
+  fig.height = 4
+)
+library('adea')
+```
+
+# Introduction
+
+Variable selection in DEA is a question that requires full attention before the results of an analysis can be used in a real case, because its results can be significantly modified depending on the variables included in the model.
+So, variable selection is a keystone step in each DEA application.
+
+`adea` provides a measure called load of the contribution of a variable into a DEA model.
+In an ideal case, when all variables contribute in same way, all loads will be 1.
+Thus, for example, if an output variable load is 0.75, means that its contribution is 75% of the average value for all outputs. 
+A value for variable load lower than 0.6 means that its contribution to DEA model is negligible.
+
+For more information see [@Fernandez2018] and [@Villanueva2021].
+
+Let's load and have a look at the `tokyo_libraries` dataset with
+```{r}
+data(tokyo_libraries)
+head(tokyo_libraries)
+```
+
+# Step wise variable selection
+
+Two step wise variable selection functions are provided.
+The first one drops variables one by one giving a set of nested models.
+The following code setup input and output variables and do the call
+```{r}
+input <- tokyo_libraries[, 1:4]
+output <- tokyo_libraries[, 5:6]
+adea_hierarchical(input, output)
+```
+
+```{r include=FALSE}
+m <- adea_hierarchical(input, output)
+```
+
+The load of the first model is `r m$models[[6]]$load$load` which is under the minimum significance level, so `Area.I1` can be removed from the model.
+
+When a variable is removed what one can expect is that the load of all variables raise, but after the second model this not happen.
+So third model is poorer than second and there is no statistical reason to select it.
+
+To avoid that a second step wise selection variable is provided, the new call is
+```{r}
+adea_parametric(input, output)
+```
+
+In both case, all variables have been taken into account to remove them, but `load.orientation` parameter allows to select which variables have to be included in load analysis, `input` for only input variables, `output` for only output variables, and `inoutput`, the default value for all variables.
+The next call consider only output variables as candidate variables to be removed:
+```{r}
+adea_parametric(input, output, load.orientation = 'output')
+```
+
+`adea_hierarchical` and `adea_parametric` return a list, called `models`, with all computed model that can be accessed through the following call
+```{r}
+m <- adea_hierarchical(input, output)
+m4 <- m$models[[4]]
+m4
+```
+where the number in square brackets is the number of total variables in the model.
+
+By default, when `print` function is called with an `adea` model, it prints only efficiencies.
+`summary` results in a wider output:
+```{r}
+summary(m4)
+```
+
+
+# References

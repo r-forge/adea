@@ -25,7 +25,7 @@ lp_solve_adea <- function(input, output, eff = NULL, orientation = c('input', 'o
     if (is.vector(input)) input <- matrix(input, ncol = 1)
     if (is.vector(output)) output <- matrix(output, ncol = 1)
 
-    ## Initialize values
+    ## Initialise values
     status <- NULL
     ux <- NULL
     vy <- NULL
@@ -56,7 +56,7 @@ lp_solve_adea <- function(input, output, eff = NULL, orientation = c('input', 'o
     set.objfn(lp, c(-1), c(ncol))
 
     ## Change to on row.add.mode improves the performance
-    ## Objetive function must be before to activate row.add.mode
+    ## Objective function must be before to activate row.add.mode
     ## Seems not to be available after solved
     ## row.add.mode(lp, state = 'on')
     ## Add rows for scores constraints

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: adea 0.1\n"
-"POT-Creation-Date: 2021-08-16 20:06\n"
+"Project-Id-Version: adea 1.1.2\n"
+"POT-Creation-Date: 2021-09-01 12:55\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,7 +94,7 @@ msgstr ""
 msgid "The reason for stop was that the"
 msgstr ""
 
-msgid "maximun number of steps has been reached."
+msgid "maximum number of steps has been reached."
 msgstr ""
 
 msgid "load level given has been reached."

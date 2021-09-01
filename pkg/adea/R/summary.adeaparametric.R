@@ -3,7 +3,7 @@
 #' For the final model of adea_parametric function print the model name, orientation, load orientation, a summary, the input variables, and outputs variables.
 #' 
 #' @name summary.adeaparametric
-#' @param object is the object of class adeaparametric to summarize
+#' @param object is the object of class adeaparametric to summarise
 #' @param ... optional arguments to 'print'
 #' @method summary adeaparametric
 #' @export

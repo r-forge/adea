@@ -11,7 +11,7 @@
 #' data('cardealers3')
 #' 
 #' @format 
-#' \code{Employess}: The number of employess in the car dealer to be considered as input variable in DEA.
+#' \code{Employess}: The number of employees in the car dealer to be considered as input variable in DEA.
 #' 
 #' \code{Amortization}: As an indirect measure of the capital invested to be considered as input variable in DEA.
 #'

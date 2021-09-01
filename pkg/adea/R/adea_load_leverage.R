@@ -39,7 +39,7 @@ adea_load_leverage <- function(input, output, orientation = c('input', 'output')
     dmu.indexs <- matrix(NA, ncol = ndel, nrow = 0)
     next.index <- 1
 
-    ## Normalize input
+    ## Normalise input
     input <- adea_setup(input, output)
     output <- input$output
     input <- input$input

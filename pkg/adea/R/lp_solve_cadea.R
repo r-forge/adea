@@ -9,7 +9,7 @@
 #' @param solve If TRUE then solve dea model
 #' @param eff The efficiency scores from dea analysis.
 #' @param lp The problem returned from lp_solve.dea or NULL
-#' @param max.iterations Maximun number of iterations before stop
+#' @param max.iterations Maximum number of iterations before stop
 #' @return lp adea problem for the given input, output and scores
 lp_solve_cadea <- function(input, output, eff = NULL, orientation = c('input', 'output'), load.orientation = c('inoutput', 'input', 'output'), load.min, load.max, max.iterations = 25, solve = FALSE, lp = NULL)
 {
@@ -25,7 +25,7 @@ lp_solve_cadea <- function(input, output, eff = NULL, orientation = c('input', '
     orientation <- match.arg(orientation)
     load.orientation <- match.arg(load.orientation)
     
-    ## Standarize input and output
+    ## Standardise input and output
     dat <- adea_setup(input, output)
     input <- dat$input
     output <- dat$output
@@ -58,7 +58,7 @@ lp_solve_cadea <- function(input, output, eff = NULL, orientation = c('input', '
     ## if needed, then compute scores
     if (missing(eff) || is.null(eff)) eff <- .lp_solve_dea$eff
 
-    ## Initialize values
+    ## Initialise values
     status <- NULL
     ux <- NULL
     vy <- NULL
@@ -184,13 +184,13 @@ lp_solve_cadea <- function(input, output, eff = NULL, orientation = c('input', '
             ## cat("continue (loads):", .continue, "\n")
             ## if (exists('.cadea.loads.old')) cat("loads.diff:", unlist(.cadea.loads) - unlist(.cadea.loads.old), "\n")
 
-            ## Compute efficiencies error and loop if neccesary
+            ## Compute efficiencies error and loop if necessary
             .err <- sum((eff - eff.old)^2)
             .continue <- .continue || (.err > err.tolerance)
 
             ## debug
             ## cat("error:", .err, "\n")
-            ## cat("contiue (error)", .continue, "\n")
+            ## cat("continue (error)", .continue, "\n")
             ## cat("eff.diff:", eff - eff.old, "\n")
             ## cat(.cadea.loads$ratios$input < load.min[1:ni] - load.tolerance, '\n')
             ## cat(.cadea.loads$ratios$input, load.max[1:ni] + load.tolerance, .cadea.loads$ratios$input > load.max[1:ni] - load.tolerance, '\n')

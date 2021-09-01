@@ -3,7 +3,7 @@
 #' For the final model of adea_hierarchical function print the model name, orientation, load orientation, a summary, the input variables, and outputs variables.
 #' 
 #' @name summary.adeahierarchical
-#' @param object Is the object of class adeahierarchical to summarize.
+#' @param object Is the object of class adeahierarchical to summarise.
 #' @param ... Optional arguments to "print".
 #' @method summary adeahierarchical
 #' @export

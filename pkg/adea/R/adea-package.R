@@ -9,9 +9,9 @@
 #'
 #' Package: adea
 #'
-#' Version: 1.1.1
+#' Version: 1.1.2
 #'
-#' Date: 2021-08-31
+#' Date: 2021-09-01
 #'
 #' License: GPL (>= 3)
 #' }
@@ -23,7 +23,7 @@
 #' ADEA methodology includes a new phase in the classical DEA analysis that measures the relative importance of each input and output variable.
 #' This above-mentioned measure is called load ratio or contribution.
 #' A load for the whole model is also defined.
-#' Using such measure, a procedure to select an optimized or relevant set of variables has been developed.
+#' Using such measure, a procedure to select an optimised or relevant set of variables has been developed.
 #'
 #' A variable load is a number between 0 and 1.
 #' Where 0 means that the contribution of that variable to the efficiency values is negligible.

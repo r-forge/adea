@@ -72,7 +72,7 @@ cadea <- function(input, output, orientation = c('input', 'output'), load.orient
     err <- adea.check(input = input, output = output, ux = NULL, vy = NULL, eff = NULL)
     if (err != TRUE) stop(err)
 
-    ## Standarize input and output
+    ## Standardise input and output
     dat <- adea_setup(input, output)
     input <- dat$input
     output <- dat$output
