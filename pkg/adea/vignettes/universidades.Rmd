@@ -1,0 +1,36 @@
+---
+title: "Eficiencia de las universides públicas españolas"
+author: 
+ - Fernando Fernandez-Palacin^[Universidad de Cádiz, fernando.fernandez@uca.es]
+ - Manuel Munoz-Marquez^[Universidad de Cádiz, manuel.munoz@uca.es]
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Eficiencia de las universides públicas españolas}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 6,
+  fig.height = 4
+)
+library('adea')
+```
+
+# Introducción
+
+# Descripción de los datos
+
+# Análisis DEA
+
+# Selección de variables
+
+# Comparación de los resultados
+
+# Conclusiones
+
+
