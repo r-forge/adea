@@ -9,9 +9,9 @@
 
 Package: adea
 
-Version: 1.1.2
+Version: 1.1.3
 
-Date: 2021-09-01
+Date: 2021-09-02
 
 License: GPL (>= 3)
 }
