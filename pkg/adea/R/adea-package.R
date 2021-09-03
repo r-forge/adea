@@ -9,7 +9,7 @@
 #'
 #' Package: adea
 #'
-#' Version: 1.1.5
+#' Version: 1.1.6
 #'
 #' Date: 2021-09-02
 #'
