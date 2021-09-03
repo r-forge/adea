@@ -1,0 +1,68 @@
+---
+title: "Influential or leverage units in ADEA"
+author: 
+ - Fernando Fernandez-Palacin^[Universidad de Cádiz, fernando.fernandez@uca.es]
+ - Manuel Munoz-Marquez^[Universidad de Cádiz, manuel.munoz@uca.es]
+date: "`r Sys.Date()`"
+bibliography: dea.bib
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Influential or leverage units in ADEA}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 6,
+  fig.height = 4
+)
+library('adea')
+```
+
+# Introduction
+
+An influential or leverage units is a one that produce a big changes in results.
+In this case is a unit that produce a big change in model load.
+
+For more information about loads help of the package about `adea` or see [@Fernandez2018] and [@Villanueva2021].
+
+Let's load and have a look at the `tokyo_libraries` dataset with
+```{r}
+data(tokyo_libraries)
+head(tokyo_libraries)
+```
+
+# Searching for influential units
+
+`adea_load_leverage` function looks for units that produce higher change in loads.
+The following call
+```{r}
+input <- tokyo_libraries[, 1:4]
+output <- tokyo_libraries[, 5:6]
+adea_load_leverage(input, output)
+```
+shows that units 23 and 6 produce changes greater than the default value for `load.diff` which is 0.05.
+
+The output is sorted in decreasing order of `load.diff` which is the change in load model.
+
+Those call only considers changes taking units one by one, but using `ndel` parameter remove of more than one unit at the same time can be tested.
+The following call tests all groups of two units
+```{r}
+adea_load_leverage(input, output, load.diff = 0.1, ndel = 2)
+```
+This results in a very long list, so the number or groups in output can be limited, for example, to 10, as in the following call
+```{r}
+adea_load_leverage(input, output, load.diff = 0.1, ndel = 2, nmax = 10)
+```
+
+This shows that the best option to remove two units is not the same as remove the two firsts in the one by one analysis.
+This is because that there are interactions between the units effects.
+
+From this point, decision maker or researcher have to handle this units properly, to avoid biases in DEA results.
+
+Each call to `adea_load_leverage` requires to solve a big set of a large linear program, so is a very demanding of computation resource, and can require a very large time, so be patient.
+
+# References
