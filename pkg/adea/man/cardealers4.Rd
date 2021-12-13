@@ -20,7 +20,7 @@ Electronic edition.
 \url{https://www.eumed.net/libros-gratis/2006c/197/}
 }
 \description{
-An example dataset for six car dealers to be use in DEA (Data envelopment analysis).
+An example dataset with six car dealers to be use in DEA (Data envelopment analysis).
 }
 \details{
 The purpose of this dataframe is to be used in DEA (Data Envelopment Analysis).

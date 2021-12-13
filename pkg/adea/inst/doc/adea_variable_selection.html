@@ -13,7 +13,7 @@
 <meta name="author" content="Fernando Fernandez-Palacin" />
 <meta name="author" content="Manuel Munoz-Marquez" />
 
-<meta name="date" content="2021-09-03" />
+<meta name="date" content="2021-12-13" />
 
 <title>Variable selection in DEA with adea method</title>
 
@@ -350,7 +350,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Variable selection in DEA with adea method</h1>
 <h4 class="author">Fernando Fernandez-Palacin<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></h4>
 <h4 class="author">Manuel Munoz-Marquez<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></h4>
-<h4 class="date">2021-09-03</h4>
+<h4 class="date">2021-12-13</h4>
 
 
 
@@ -376,23 +376,25 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>input &lt;-<span class="st"> </span>tokyo_libraries[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>output &lt;-<span class="st"> </span>tokyo_libraries[, <span class="dv">5</span><span class="op">:</span><span class="dv">6</span>]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="kw">adea_hierarchical</span>(input, output)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="co">#&gt;        Load #Efficients #Variables #Inputs #Outputs</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="co">#&gt; 6 0.4554670           6          6       4        2</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="co">#&gt; 5 0.9901640           6          5       3        2</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="co">#&gt; 4 0.9031744           4          4       3        1</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="co">#&gt; 3 0.7550366           2          3       2        1</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="co">#&gt; 2 1.0000000           1          2       1        1</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="co">#&gt;                                        Inputs              Outputs</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a><span class="co">#&gt; 6 Area.I1, Books.I2, Staff.I3, Populations.I4 Regist.O1, Borrow.O2</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a><span class="co">#&gt; 5          Books.I2, Staff.I3, Populations.I4 Regist.O1, Borrow.O2</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a><span class="co">#&gt; 4          Books.I2, Staff.I3, Populations.I4            Borrow.O2</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a><span class="co">#&gt; 3                    Books.I2, Populations.I4            Borrow.O2</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a><span class="co">#&gt; 2                                    Books.I2            Borrow.O2</span></span></code></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="co">#&gt;      Carga #Eficientes #Variables #Inputs #Outputs</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="co">#&gt; 6 inoutput           6          6       4        2</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="co">#&gt; 5 inoutput           6          5       3        2</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="co">#&gt; 4 inoutput           4          4       3        1</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="co">#&gt; 3 inoutput           2          3       2        1</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="co">#&gt; 2 inoutput           1          2       1        1</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="co">#&gt; 1 inoutput           0          1       0        0</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a><span class="co">#&gt;                                        Inputs              Outputs</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a><span class="co">#&gt; 6 Area.I1, Books.I2, Staff.I3, Populations.I4 Regist.O1, Borrow.O2</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a><span class="co">#&gt; 5          Books.I2, Staff.I3, Populations.I4 Regist.O1, Borrow.O2</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a><span class="co">#&gt; 4          Books.I2, Staff.I3, Populations.I4            Borrow.O2</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a><span class="co">#&gt; 3                    Books.I2, Populations.I4            Borrow.O2</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a><span class="co">#&gt; 2                                    Books.I2            Borrow.O2</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a><span class="co">#&gt; 1</span></span></code></pre></div>
 <p>The load of the first model is 0.455467 which is under the minimum significance level, so <code>Area.I1</code> can be removed from the model.</p>
 <p>When a variable is removed what one can expect is that the load of all variables raise, but after the second model this not happen. So third model is poorer than second and there is no statistical reason to select it.</p>
 <p>To avoid that a second step wise selection variable is provided, the new call is</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">adea_parametric</span>(input, output)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="co">#&gt;       Load #Efficients #Variables #Inputs #Outputs</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="co">#&gt;      Carga #Eficientes #Variables #Inputs #Outputs</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="co">#&gt; 6 0.455467           6          6       4        2</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="co">#&gt; 5 0.990164           6          5       3        2</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="co">#&gt; 2 1.000000           1          2       1        1</span></span>
@@ -402,9 +404,9 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a><span class="co">#&gt; 2                                    Books.I2            Borrow.O2</span></span></code></pre></div>
 <p>In both case, all variables have been taken into account to remove them, but <code>load.orientation</code> parameter allows to select which variables have to be included in load analysis, <code>input</code> for only input variables, <code>output</code> for only output variables, and <code>inoutput</code>, the default value for all variables. The next call consider only output variables as candidate variables to be removed:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">adea_parametric</span>(input, output, <span class="dt">load.orientation =</span> <span class="st">&#39;output&#39;</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="co">#&gt;   Load #Efficients #Variables #Inputs #Outputs</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="co">#&gt; 6    1           6          6       4        2</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="co">#&gt; 5    1           4          5       4        1</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="co">#&gt;   Carga #Eficientes #Variables #Inputs #Outputs</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="co">#&gt; 6     1           6          6       4        2</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="co">#&gt; 5     1           4          5       4        1</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="co">#&gt;                                        Inputs              Outputs</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="co">#&gt; 6 Area.I1, Books.I2, Staff.I3, Populations.I4 Regist.O1, Borrow.O2</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="co">#&gt; 5 Area.I1, Books.I2, Staff.I3, Populations.I4            Borrow.O2</span></span></code></pre></div>
@@ -421,22 +423,22 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>where the number in square brackets is the number of total variables in the model.</p>
 <p>By default, when <code>print</code> function is called with an <code>adea</code> model, it prints only efficiencies. <code>summary</code> results in a wider output:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="kw">summary</span>(m4)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="co">#&gt; Model name: </span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="co">#&gt; Orientation is input</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="co">#&gt; Nombre del modelo: </span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="co">#&gt; La orientación es input</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="co">#&gt; Inputs: Books.I2 Staff.I3 Populations.I4 </span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="co">#&gt; Outputs: Borrow.O2 </span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="co">#&gt; Input loads:  1.193651 0.9031744 0.9031744 </span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="co">#&gt; Output loads:  1 </span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a><span class="co">#&gt; Model load: 0.903174350658053</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a><span class="co">#&gt; #Efficients: 4</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a><span class="co">#&gt; Efficiencies:</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="co">#&gt; Cargas de inputs:  1.193651 0.9031744 0.9031744 </span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="co">#&gt; Cargas de outputs:  1 </span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a><span class="co">#&gt; Carga del modelo: 0.903174350658053</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a><span class="co">#&gt; #Eficientes: 4</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a><span class="co">#&gt; Eficiencias:</span></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a><span class="co">#&gt;         1         2         3         4         5         6         7         8 </span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a><span class="co">#&gt; 0.3026132 0.6425505 0.5733000 0.7164871 0.6733832 1.0000000 0.6967419 0.4476942 </span></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a><span class="co">#&gt;         9        10        11        12        13        14        15        16 </span></span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a><span class="co">#&gt; 1.0000000 0.7051438 0.5336592 0.7583527 0.5915395 0.7215430 0.7832606 0.5822710 </span></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a><span class="co">#&gt;        17        18        19        20        21        22        23 </span></span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a><span class="co">#&gt; 0.8451129 0.7867065 1.0000000 0.8485716 0.7285929 0.7849437 1.0000000 </span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a><span class="co">#&gt; Summary of efficiencies:</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a><span class="co">#&gt; Resumen de las eficiencias:</span></span>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true"></a><span class="co">#&gt;      Mean        sd      Min.   1st Qu.    Median   3rd Qu.      Max. </span></span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true"></a><span class="co">#&gt; 0.7270638 0.1793772 0.3026132 0.6170450 0.7215430 0.8159097 1.0000000</span></span></code></pre></div>
 </div>

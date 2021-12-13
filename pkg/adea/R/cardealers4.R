@@ -1,6 +1,6 @@
 #'  A data set about car dealers, 4 of 4, to be used in DEA
 #'
-#' An example dataset for six car dealers to be use in DEA (Data envelopment analysis).
+#' An example dataset with six car dealers to be use in DEA (Data envelopment analysis).
 #' @docType data
 #' @name cardealers4
 #' @keywords data DEA

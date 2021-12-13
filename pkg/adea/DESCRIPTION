@@ -4,8 +4,8 @@ Depends: Benchmarking, combinat, lpSolveAPI, methods, R (>= 3.5.0),
         rmarkdown
 Imports: knitr
 VignetteBuilder: knitr
-Version: 1.1.6
-Date: 2021-09-02
+Version: 1.2.1
+Date: 2021-12-13
 ByteCompile: true
 Title: Alternate DEA Package
 Authors@R: c(person('Fernando', 'Fernandez-Palacin', email = 'fernando.fernandez@uca.es', role = 'aut', comment = c(ORCID='0000-0002-3525-2924')), person('Manuel', 'Munoz-Marquez', email = 'manuel.munoz@uca.es', role = c('aut', 'cre'), comment = c(ORCID = '0000-0003-4157-8784')))
@@ -14,9 +14,12 @@ Description: The meaning of adea is "alternate DEA". This package is devoted to 
     A full functional on-line and interactive version is available at
     <https://knuth.uca.es/shiny/DEA/>.
 License: GPL (>= 3)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
+Suggests: testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Config/testthat/parallel: true
 NeedsCompilation: no
-Packaged: 2021-09-03 16:06:55 UTC; mmarquez
+Packaged: 2021-12-13 18:05:30 UTC; mmarquez
 Author: Fernando Fernandez-Palacin [aut]
     (<https://orcid.org/0000-0002-3525-2924>),
   Manuel Munoz-Marquez [aut, cre]

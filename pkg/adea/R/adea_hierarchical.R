@@ -56,6 +56,7 @@
 adea_hierarchical <- function(input, output, orientation = c('input', 'output'), load.orientation = c('inoutput', 'input', 'output'), name = '', direction = c('backward', 'backward/input', 'backward/output'), verbose = 0) {
     .adea <- stepwise(input = input, output = output, orientation = orientation, load.orientation = load.orientation, name = name, direction = direction, verbose = verbose, load.critical = 1)
     ## Drop non useful information
+    .adea$load <- NULL
     .adea$lp <- NULL
     .adea$load.critical <- NULL
     .adea$steps <- NULL
