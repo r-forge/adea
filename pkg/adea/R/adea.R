@@ -39,6 +39,8 @@
 #'     \item lp: A pointer to the linear programming program of the model. Mainly for research purpose
 #'     \item iinput: A vector of index of inputs that almost reach the load level
 #'     \item ioutput: A vector of index of outputs that almost reach the load level
+#'     \item vinput: Standardized virtual input dividing by the sum of the weights, see [Costa2006] in \code{\link{adea-package}}.
+#'     \item voutput: Standardized virtual output dividing by the sum of the weights, see [Costa2006] in \code{\link{adea-package}}.
 #'   }
 #' }
 #' @seealso \code{\link{adea-package}}.
@@ -159,6 +161,18 @@ adea <- function(input, output, orientation = c('input', 'output'), load.orienta
 
     ## Number of efficiency units
     .adea$neff <- sum((.dea$eff < 1 + eff.tolerance) & (.dea$eff > 1 - eff.tolerance))
+
+    ## Store input and ouput
+    ## .adea$input <- input
+    ## .adea$output <- output
+
+    ## Compute and store virtual input and output as described in @references A new approach to the bi-dimensional representation of the DEA efficient frontier with multiple inputs and outputs
+    if (orientation == 'output') s <- rowSums(.adea$vy)
+    if (orientation == 'input') s <- rowSums(.adea$ux)
+    ux <- .adea$ux/s
+    vy <- .adea$vy/s
+    .adea$vinput <- rowSums(ux * input)
+    .adea$voutput <- rowSums(vy * output)
     
     ## Change the class of the object
     class(.adea) <- 'adea'

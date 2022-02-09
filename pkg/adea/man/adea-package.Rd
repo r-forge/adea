@@ -9,9 +9,9 @@
 
 Package: adea
 
-Version: 1.2.1
+Version: 1.3.1
 
-Date: 2021-12-13
+Date: 2022-02-09
 
 License: GPL (>= 3)
 }
@@ -60,9 +60,20 @@ The main functions that this package provides are:
 The package is ready for translations, so contributions with translated versions of po files will be very welcomed.
 }
 \references{
-Stepwise Selection of Variables in DEA Using Contribution Load. \emph{F. Fernandez-Palacin}, \emph{M. A. Lopez-Sanchez} and \emph{M. Munoz-Marquez}. Pesquisa Operacional 38 (1), pg. 1-24, 2018. <DOI:10.1590/0101-7438.2018.038.01.0000>.
+A new approach to the bi-dimensional representation of the DEA efficient frontier with multiple inputs and outputs. 
+\emph{Carlos A. Bana e Costa} and \emph{Joao Carlos C. B. Soares de Mello} and \emph{Lidia Angulo Meza}.
+European Journal of Operational Research, 255 (1), pg. 175-186, 2016,
+<DOI:10.1016/j.ejor.2016.05.012>.
 
-Methodology for calculating critical values of relevance measures in variable selection methods in data envelopment analysis. \emph{Jeyms Villanueva-Cantillo} and \emph{Manuel Munoz-Marquez}. European Journal of Operational Research, 290 (2), pg. 657-670, 2021. <DOI:10.1016/j.ejor.2020.08.021>.
+Stepwise Selection of Variables in DEA Using Contribution Load.
+\emph{F. Fernandez-Palacin}, \emph{M. A. Lopez-Sanchez} and \emph{M. Munoz-Marquez}.
+Pesquisa Operacional 38 (1), pg. 1-24, 2018.
+<DOI:10.1590/0101-7438.2018.038.01.0000>.
+
+Methodology for calculating critical values of relevance measures in variable selection methods in data envelopment analysis.
+\emph{Jeyms Villanueva-Cantillo} and \emph{Manuel Munoz-Marquez}.
+European Journal of Operational Research, 290 (2), pg. 657-670, 2021.
+<DOI:10.1016/j.ejor.2020.08.021>.
 }
 \author{
 Fernando Fernandez-Palacin <fernando.fernandez@uca.es> and Manuel Munoz-Marquez <manuel.munoz@uca.es>

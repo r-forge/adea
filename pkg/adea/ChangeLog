@@ -1,3 +1,6 @@
+Version 1.3.1
+2022-02-09
+ * Add a new plot of virtual input vs virtual outpur for an adea object
 Version 1.2.1
 2021-12-13
  * Add test with testhat package

@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: adea 0.1\n"
-"POT-Creation-Date: 2021-09-01 12:55\n"
-"PO-Revision-Date: 2021-09-01 12:55+0200\n"
+"POT-Creation-Date: 2022-02-09 19:48\n"
+"PO-Revision-Date: 2022-02-09 20:25+0100\n"
 "Last-Translator: Manuel Munoz-Marquez <manuel.munoz@uca.es>\n"
 "Language-Team: Manuel Munoz-Marquez\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -67,16 +67,16 @@ msgid "Unequal number of rows in input and eff."
 msgstr "Desigual número de filas en input y eff."
 
 msgid "load"
-msgstr ""
+msgstr "carga"
 
 msgid "load.diff"
-msgstr ""
+msgstr "diferencia"
 
 msgid "index"
-msgstr ""
+msgstr "índice"
 
 msgid "names"
-msgstr ""
+msgstr "nombres"
 
 msgid "adea_load_leverage: nmax must be numeric >= 0"
 msgstr "adea_load_leverage: nmax debe ser un número >= 0"
@@ -88,7 +88,7 @@ msgid "Starting adea_stepwise using backward selection"
 msgstr "Iniciando adea_stepwise usando selección hacia atrás"
 
 msgid "load.critical value is"
-msgstr "El valor de load.critical es"
+msgstr "el valor de load.critical es"
 
 msgid "Step %d dropping %s %s with load ratio equal to %f"
 msgstr "Paso %d eliminando %s %s con carga igual a %f"
@@ -107,9 +107,6 @@ msgstr "el máximo número de pasos ha sido alcanzado."
 
 msgid "load level given has been reached."
 msgstr "el nivel de la carga dado ha sido alcanzado."
-
-msgid "Unable to solve dea model"
-msgstr "No se ha podido resolver el modelo dea"
 
 msgid "cadea:"
 msgstr ""
@@ -204,10 +201,22 @@ msgstr ""
 "Ninguna solución factible de la ramificación y acotación fue encontrada"
 
 msgid "Unable to solve cadea model. Solver status is"
-msgstr "No se ha podido resolver el modelo adea. El estado del optimizador es"
+msgstr "No se ha podido resolver el modelo cadea. El estado del optimizador es"
 
 msgid "Unable to solve dea model. Solver status is"
 msgstr "No se ha podido resolver el modelo dea. El estado del optimizador es"
+
+msgid "ADEA efficient frontier"
+msgstr "Frontera eficiente ADEA"
+
+msgid "for model:"
+msgstr "del modelo:"
+
+msgid "Virtual input"
+msgstr "Virtual input"
+
+msgid "Virtual output"
+msgstr "Virtual output"
 
 msgid "Load"
 msgstr "Carga"
@@ -292,6 +301,9 @@ msgstr "Informe paso a paso"
 
 msgid "Dropping"
 msgstr "Eliminando"
+
+#~ msgid "Unable to solve dea model"
+#~ msgstr "No se ha podido resolver el modelo dea"
 
 #~ msgid "Efficiencies:"
 #~ msgstr "Eficiencias"

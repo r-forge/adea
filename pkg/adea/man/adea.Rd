@@ -45,6 +45,8 @@ The function return an adea class object with the following named members:
     \item lp: A pointer to the linear programming program of the model. Mainly for research purpose
     \item iinput: A vector of index of inputs that almost reach the load level
     \item ioutput: A vector of index of outputs that almost reach the load level
+    \item vinput: Standardized virtual input dividing by the sum of the weights, see [Costa2006] in \code{\link{adea-package}}.
+    \item voutput: Standardized virtual output dividing by the sum of the weights, see [Costa2006] in \code{\link{adea-package}}.
   }
 }
 }
