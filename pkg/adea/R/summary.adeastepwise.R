@@ -3,28 +3,40 @@
 #' For the final model of adea_stepwise function print the model name, orientation, load orientation, a summary, the input variables, and outputs variables.
 #' 
 #' @name summary.adeastepwise
-#' @param object is the object of class adeastepwise to summarise.
-#' @param ... Optional arguments to "print".
+#' @param object Is the object of class adeastepwise to summarise.
+#' @param eff.tolerance Tolerance value for efficiencies to conside a DMU an efficient one. Its default value is .001.
 #' @method summary adeastepwise
+summary.adeastepwise <- function(object, eff.tolerance = .001) {
+    l <- list()
+    l['Model name'] <- object$name
+    l['Orientation'] <- object$orientation
+    l['Load orientation'] <- object$load.orientation
+    neff <- sapply(object$models, neff.dea, eff.tolerance = eff.tolerance)
+    s <- data.frame(
+        'Loads' = object$loads,
+        'nEfficients' = neff,
+        'nVariables' = object$nvariables,
+        'nInputs' = object$ninputs,
+        'nOutputs' = object$noutputs,
+        'Inputs' = object$inputnames,
+        'Outputs' = object$outputnames)
+    s <- s[s[,1] > 0,]
+    s <- s[nrow(s):1,]
+    l$models <- s
+    class(l) <- 'summary.adeastepwise'
+    l
+}
+
 #' @export
-summary.adeastepwise <- function(object, ...) {
-    ## Last model
-    .n <- length(object$load)
-    cat(gettext('Summary of adea stepwise variable selection for model'), ' "', object$name , '":\n', sep = '')
-    cat(gettext('Model orientation'), ': ', object$orientation, '.\n', sep = '')
-    cat(gettext('Load orientation'), ': ', object$load.orientation, '.\n', sep = '')
-    cat(gettext('Load level required'), ': ', object$load.critical, '.\n', sep = '')
-    cat(gettext('Stop criterion reached'), ': ', gettext(object$stop.criterion), '.\n', sep = '')
-    cat(gettext('Number of steps'), ': ', object$steps, '.\n', sep = '')
-    cat(paste(gettext('Inputs'), ':', paste(names(object$adea$load$ratios$input), collapse = ' '), '\n'))
-    cat(paste(gettext('Outputs'), ':', paste(names(object$adea$load$ratios$output), collapse = ' '), '\n'))
-    cat(gettext('Efficiencies'), ':', object$adea$eff, '\n')
-    ## All models
-    cat(gettext('Step by step report'), ':\n', sep = '')
-    s <- data.frame(object$load, object$neff, object$nt, object$ni, object$no, object$namesi, object$nameso, object$out)
-    colnames(s) <- gettext(c('Load',  '#Efficients', '#Variables', '#Inputs', '#Outputs', 'Inputs', 'Outputs', 'Dropping'))
-    s <- s[nrow(s):1, ]
-    s <- s[s$Load > 0, ]
-    print(s, ...)
-    invisible(object)
+print.summary.adeastepwise <- function(x, ...) {
+    models <- x$models
+    lx <- x
+    lx$models <- NULL
+    lx <- data.frame(unlist(lx))
+    rownames(lx) <- gettext(rownames(lx))
+    names(lx) <- ''
+    print(lx, ...)
+    names(models) <- gettext(names(models))
+    print(models, ...)
+    invisible(x)
 }

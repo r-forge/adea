@@ -1,7 +1,7 @@
-## Read data
+## Load data
 data('cardealers4')
-input <- cardealers4[, 1:2]
-output <- cardealers4[, 3:4]
+input <- cardealers4[, c('Employees', 'Depreciation')]
+output <- cardealers4[, c('CarsSold', 'WorkOrders')]
 
 ## Solve dea model using adea from adea package
 adea(input, output)
@@ -12,10 +12,12 @@ sol.adea <- adea(input, output)
 sol.adea$eff
 ## Weights
 cbind(sol.adea$ux, sol.adea$vy)
-## Load ratios
-sol.adea$load$ratios
-## Load levels
-sol.adea$load$load
+## Input variable loads
+sol.adea$loads$input
+## Output variable loads
+sol.adea$loads$output
+## Model load
+sol.adea$loads$load
 
 ## Compute all dea models in hierarchical way
 adea_hierarchical(input, output)
@@ -25,10 +27,10 @@ sol.ah <- adea_hierarchical(input, output)
 sol.ah$models[[3]]
 ## Get efficiencies for model with 3 variables
 sol.ah$models[[3]]$eff
-## Get inputs in model with 3 variables
-sol.ah$namesi[[3]]
-## Get outputs in model with 3 variables
-sol.ah$nameso[[3]]
+## Get input names in model with 3 variables
+sol.ah$inputnames[[3]]
+## Get output namess in model with 3 variables
+sol.ah$outputnames[[3]]
 
 ## Compute all dea models in parametric way
 adea_parametric(input, output)
@@ -38,8 +40,8 @@ sol.ap <- adea_parametric(input, output)
 sol.ap$models[[3]]
 ## Get efficiencies for model with 3 variables
 sol.ap$models[[3]]$eff
-## Get inputs in model with 3 variables
-sol.ap$namesi[[3]]
-## Get outputs in model with 3 variables
-sol.ap$nameso[[3]]
+## Get input names in model with 3 variables
+sol.ap$inputnames[[3]]
+## Get output names in model with 3 variables
+sol.ap$outputnames[[3]]
 

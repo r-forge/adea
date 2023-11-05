@@ -1,16 +1,18 @@
-#' Compute the variables load ratios in DEA
+#' Compute the variables loads for DEA analysis with specified weights
 #'
-#' For the given input, output and two sets of weights, the function computes the loads of each variable for such values.
+#' The adea_loads function calculates variable loads for Data Envelopment Analysis (DEA) with user-specified weights for input and output variables.
 #'
-#' In DEA analysis, even when the efficiency scores remain constants, there are a great level of freedom to select the sets of weights for input and output variables.
+#' In DEA analysis, even when the efficiency scores remain constants, there is a significant degree of freedom in selecting the sets of weights for input and output variables.
+#'
+#' Not all sets of weights assign the same importance to the variables.
+#' This function allows you to compute the load of each variable based on the provided weights.
+#' It also computes load.levels, which represents the minimum values of such loads.
 #' 
-#' Not all those sets of weights attaches the same importance to the variables. 
-#' This function allows to compute the load of each variable for the given weights in order to compare different sets of weights for the same efficiencies scores.
-#' Also compute load.levels which are the minimum value of such loads.
+#' It's important to note that different sets of weights result in different ways to model efficiency.
+#' This function does not solve any model.
+#' It provides the loads for the specified weights, as described in the theoretical ADEA model.
 #' 
-#' Take into account that different sets of weights means different ways to model the efficiency.
-#'
-#' This function does not solve any model, only if ux and vy are the optimal values for the adea model, this function provides the load-levels as described in the theoretical adea model.
+#' This function is primarily intended for research and internal use.
 #'
 #' @inheritParams adea
 #' @param ux A matrix of weights for DMUs and input variables.
@@ -19,57 +21,66 @@
 #' # Load data
 #' data('cardealers4')
 #' # Define input and output
-#' input <- cardealers4[, 1:2]
-#' output <- cardealers4[, 3:4]
+#' input <- cardealers4[, c('Employees', 'Depreciation')]
+#' output <- cardealers4[, c('CarsSold', 'WorkOrders')]
 #' # Make dea analysis
-#' model <- dea(input, output, RTS = 'crs', DUAL = TRUE)
+#' model <- dea(input, output)
 #' # Show results
 #' model
+#' #   Dealer A  Dealer B  Dealer C  Dealer D  Dealer E  Dealer F
+#' # 0.9915929 1.0000000 0.8928571 0.8653846 1.0000000 0.6515044 
 #' # Compute loads for such weights
 #' adea_loads(input, output, model$ux, model$vy)
+#' # $load
+#' # [1] 0
+#' # $input
+#' #    Employees Depreciation 
+#' #            0            2 
+#' # $iinput
+#' # Employees 
+#' #         1 
+#' # $output
+#' #   CarsSold WorkOrders 
+#' #  1.1025075  0.8974925 
+#' # $ioutput
+#' # WorkOrders 
 #' 
-#' @return Loads ratios and load for input and output variables
+#' @return Loads for model, input and output variables
 #' @export
 adea_loads <- function(input, output, ux, vy, load.orientation = c('inoutput', 'input', 'output'))
 {
     ## Check input and output
-    err <- adea.check(input = input, output = output, ux = ux, vy = vy, eff = NULL)
-    if (err != TRUE) stop(err)
+    err <- adea_check(input = input, output = output, ux = ux, vy = vy, eff = NULL)
+    if (!isTRUE(err)) stop('adea_loads:', err)
     
-    ## Check for vectors and build matrix
-    if (is.vector(input)) input <- matrix(input, ncol = 1)
-    if (is.vector(output)) output <- matrix(output, ncol = 1)
+    ## Canonize input and output format
+    vy <- adea_setup(input = input, output = output, ux = ux, vy = vy)
+    input <- vy$input
+    output <- vy$output
+    ux <- vy$ux
+    vy <- vy$vy
 
     ## Check load.orientation
     load.orientation <- match.arg(load.orientation)
 
-    ## Setup input and output names
-    if (is.null(colnames(input))) colnames(input) <- paste('input_', 1:ncol(input), sep='')
-    if (is.null(colnames(output))) colnames(output) <- paste('output_', 1:ncol(output), sep='')
-    ## Setup DMU names
-    if (is.null(rownames(input))) {
-        if (is.null(rownames(output))) rownames(input) <- paste('DMU', 1:nrow(input), sep = '-')
-        rownames(output) <- rownames(input)
-    } else {
-        if (is.null(rownames(output))) rownames(output) <- rownames(input)
-    }
+    ## Compute loads: normalised contribution of an input inside all inputs (or output)
+    loads <- list()
 
-    ## Compute load ratios: normalised contribution of an input inside all inputs (or output)
-    load <- list()
+    loads$load <- Inf
+    
     if ((load.orientation == 'input') || (load.orientation == 'inoutput')) {
-        load$ratios$input <- ncol(input) * colSums(ux * input) / sum(ux * input)
-        names(load$ratios$input) <- colnames(input)
+        loads$input <- ncol(input) * colSums(ux * input) / sum(ux * input)
+        names(loads$input) <- colnames(input)
+        loads$iinput <- which.min(loads$input)
+        loads$load <- loads$input[loads$iinput]
     }
     if ((load.orientation == 'output') || (load.orientation == 'inoutput')) {    
-        load$ratios$output <- ncol(output) * colSums(vy * output) / sum(vy * output)
-        names(load$ratios$output) <- colnames(output)
+        loads$output <- ncol(output) * colSums(vy * output) / sum(vy * output)
+        names(loads$output) <- colnames(output)
+        loads$ioutput <- which.min(loads$output)
+        loads$load <- min(loads$load, loads$output[loads$ioutput])
     }
 
-    load$load <- switch(load.orientation,
-                        input = min(load$ratios$input),
-                        output = min(load$ratios$output),
-                        inoutput = min(min(load$ratios$input), min(load$ratios$output))
-                        )
-    
-    return(load)
+    ## Return
+    loads
 }

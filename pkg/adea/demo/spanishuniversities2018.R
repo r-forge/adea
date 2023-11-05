@@ -1,22 +1,26 @@
-#Read Data
+## Load data and setup rownames
 data('spanishuniversities2018')
-input <- spanishuniversities2018[, c('TeachingStaff')]
+rownames(spanishuniversities2018) <- spanishuniversities2018$University
+input <- spanishuniversities2018[, c('TeachingStaff'), drop = FALSE]
 output <- spanishuniversities2018[, c("FPU2018s", "FPI2018s", "Patents", "PhDTheses", "JCRs", "Sixs", "Projects")]
-# Solve dea model using Benchmarking package
-cat('\nSolution using dea provided by Benchmarking package\n')
+
+## Solve dea model
+cat('\nSolution using dea\n')
 cat('--- Scores ---\n')
-(sol.dea <- dea(input, output,  RTS = 'crs', DUAL=TRUE))
+(sol.dea <- dea(input, output))
 cat('--- Weights ---\n')
 cbind(sol.dea$ux, sol.dea$vy)
 
-# Solve dea model
-cat('\nSolution using adea\n')
+## Solve adea model
+cat('\nadea model\n')
 cat('--- Scores ---\n')
 (sol.adea <- adea(input, output))
 cat('--- Weights ---\n')
 cbind(sol.adea$ux, sol.adea$vy)
-cat('--- Load ratios ---\n')
-sol.adea$load$ratios
-cat('--- Load level ---\n')
-sol.adea$load$load
+cat('--- Input variable Loads ---\n')
+sol.adea$loads$input
+cat('--- Output variable Loads ---\n')
+sol.adea$loads$output
+cat('--- Model load ---\n')
+sol.adea$loads$load
 

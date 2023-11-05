@@ -1,180 +1,189 @@
 #' ADEA analysis to variable selection in DEA
 #'
-#' ADEA analysis, computes a score for each DMU and load ratio for each variable.
+#' It does an ADEA analysis. In particular it computes a score for each DMU and a load for each variable.
 #'
-#' This function computes an efficiency score for each DMU, the same as in standard DEA model.
+#' The selection of input and output variables for inclusion in a DEA model is a critical aspect, as many studies have revealed.
+#' \code{adea} function provides an implementation of the ADEA method for variable selection in DEA.
 #'
-#' Then a load ratio for each variable is computed searching two new set of weights while keeping DMU's scores.
+#' ADEA methodology introduces a new phase in classical DEA analysis, measuring the relative importance of each input and output variable.
+#' This measure is referred to as load or contribution.
+#' It also defines a load for the entire model.
+#' Using this measure, a procedure has been developed to select an optimised or relevant set of variables.
 #'
-#' The load ratio of a variable is a number between 0 and 1.
-#' Where 0 means that the contribution of that variable to the efficiency computations is negligible.
-#' In an ideal case, each input or output variable will have a load of 1 divide by the number of them.
+#' A variable's load is a standardized ratio of the efficiency scores of all DMUs due to that variable.
+#' These loads quantify the contribution of each variable to the overall model.
+#' Where 0 means that the contribution of that variable to the efficiency values is negligible.
+#' The ideal load is 1, and values range from 0 to the number of input or output variables.
+#' The lowest load value has a real significance as it represents the variable with the least contribution to efficiency.
 #'
-#' As it is usually done in DEA this load ratio has been computed as its maximum allowable value.
-#' But because the sum of all of them is 1, when one increases its load ratio any other decreases its value.
-#' So only the lowest value of all load ratios, this is load model, has a real meaning.
+#' As it is usually done in DEA, these loads are computed as its maximum allowable value using alternative sets of weights but without changing the efficiency scores.
+#' But because the sum of all of them is fixed, when one variable increases its load, any other decrease in value.
+#' So only the lowest value of all loads has a real meaning.
 #' This lowest value can be taken as a significance measure of the entire model.
 #'
-#' @param input A matrix or a data frame with the inputs of units to be evaluated, one row for each DMU and one column for each input.
-#' @param output A matrix or a data frame with the outputs of units to be evaluated, one row for each DMU and one column for each output.
-#' @param orientation Use "input" for input orientation or use "output" for output orientation in DEA model.
-#' @param load.orientation It allows the selection of variables to be included in load analysis.
-#' Its default value is "inoutput" which means that all input and all output variables will be included. Use "input" or "output" to include only input or output variables in load analysis.
-#' @param eff.tolerance A value between 0 and 1 to tolerance when considering a DMU as efficient in reports.
-#' @param name An optional descriptive name for the model. It will be shown in print and summary results.
-#' @return The function return an adea class object with the following named members:
+#' This measure, load, has two key properties that easy its interpretation:
 #' \itemize{
-#' \item eff is a vector with DMU's scores
-#' \item neff is the number of efficient DMU with eff.tolerance. It means DMUs with efficiencies between 1 - eff.tolerance and 1 + eff.tolerance.
-#' \item load.orientation is the load orientation, one of 'input', 'output' or 'inoutput'. The last is the default value.
+#'    \item It has a bounded range from 0 to the number of input or output variables, with 1 as the ideal value.
+#'    \item It is invariant by changes in scale.
+#' }
+#' 
+#' ADEA analysis can be done considering only input variables, in this case ADEA analysis has input as \code{load.orientation} value.
+#' output when only output variables are considered.
+#' And inoutput \code{load.orientation} when all variables in the model are taken into account.
+#'
+#' Adea models, as the DEA models, can be input or output orientated.
+#' Input orientated DEA models propose to reach the efficiency of DMUs through a reduction in the amount of input required by non efficient DMUs.
+#' On the contrary, output orientated DEA models propose to increase the amount of output of non efficient DMUs.
+#'
+#' For a detailed description of the maths behind the model, see the references.
+#' 
+#' @references Stepwise Selection of Variables in DEA Using Contribution Load.
+#' \emph{F. Fernandez-Palacin}, \emph{M. A. Lopez-Sanchez} and \emph{M. Munoz-Marquez}.
+#' Pesquisa Operacional 38 (1), pg. 1-24, 2018.
+#' <DOI:10.1590/0101-7438.2018.038.01.0000>.
+#' 
+#' @references Methodology for calculating critical values of relevance measures in variable selection methods in data envelopment analysis.
+#' \emph{Jeyms Villanueva-Cantillo} and \emph{Manuel Munoz-Marquez}.
+#' European Journal of Operational Research, 290 (2), pg. 657-670, 2021.
+#' <DOI:10.1016/j.ejor.2020.08.021>.
+#' #
+#' @param input A matrix or a data frame containing the inputs of the units to be evaluated, with one row for each DMU and one column for each input.
+#' @param output A matrix or a data frame containing the outputs of the units to be evaluated, with one row for each DMU and one column for each output.
+#' @param orientation Use "input" for input orientation or "output" for output orientation in DEA model.
+#' The default is "input".
+#' @param load.orientation This parameter allows the selection of variables to be included in load analysis. 
+#' The default is "inoutput" which means that all input and output variables will be included. Use "input" or "output" to include only input or output variables in load analysis.
+#' @param name An optional descriptive name for the model.
+#' The default is an empty string. 
+#' This name will be displayed in printed and summarized results.
+#' @param solver The solver used by ROI to solve the DEA optimization problem.
+#' The default is "auto."
+#' The solver must be installed and capable of solving linear programming problems. 
+#' Use \code{ROI_installed_solvers()} to list them.
+#' @return The function returns an adea class object with the following named members:
+#' \itemize{
 #' \item name: A label of the model
 #' \item orientation: DEA model orientation 'input' or 'output'
+#' \item load.orientation: load DEA model orientation 'input', 'output', or 'inoutput'
+#' \item inputnames: Variable input names
+#' \item outputnames: Variable output names
+#' \item eff: is a vector with DMU's scores
+#' \item loads: A list with all information about loads:
+#'   \itemize{
+#'     \item load: The lowest load, which is the load of the ADEA model
+#'     \item input: A vector with loads of input variables
+#'     \item iinput: Index of input variable that reach the load of the model
+#'     \item output: A vector with loads of output variables
+#'     \item ioutput: Index of output variable that reach the load of the model
+#'   }
 #' \item ux: A set of weights for inputs
 #' \item vy: A set of weights for output
-#' \item load: A list with all information about loads:
-#'   \itemize{
-#'     \item ratios$input: A vector with load ratios of input variables
-#'     \item ratios$output: A vector with load ratios of output variables
-#'     \item load: The lowest load ratio, which is the load of the ADEA model
-#'     \item lp: A pointer to the linear programming program of the model. Mainly for research purpose
-#'     \item iinput: A vector of index of inputs that almost reach the load level
-#'     \item ioutput: A vector of index of outputs that almost reach the load level
-#'     \item vinput: Standardized virtual input dividing by the sum of the weights, see [Costa2006] in \code{\link{adea-package}}.
-#'     \item voutput: Standardized virtual output dividing by the sum of the weights, see [Costa2006] in \code{\link{adea-package}}.
-#'   }
+#' \item vinput: Standardized virtual input dividing by the sum of the weights, see [Costa2006] in \code{\link{adea-package}}.
+#' \item voutput: Standardized virtual output dividing by the sum of the weights, see [Costa2006] in \code{\link{adea-package}}
+#' \item solver: The solver used for the resolution of the optimization problem
 #' }
 #' @seealso \code{\link{adea-package}}.
 #' @examples
+#' # Load data
 #' data('cardealers4')
-#' input <- cardealers4[, 1:2]
-#' output <- cardealers4[, 3:4]
+#' 
+#' # Define input and output
+#' input <- cardealers4[, c('Employees', 'Depreciation')]
+#' output <- cardealers4[, c('CarsSold', 'WorkOrders')]
 #' 
 #' # Compute adea model
-#' model <- adea(input, output)
+#' model <- adea(input, output, name = 'ADEA for cardealers4 dataset')
 #' model
 #' # Dealer A  Dealer B  Dealer C  Dealer D  Dealer E  Dealer F
 #' # 0.9915929 1.0000000 0.8928571 0.8653846 1.0000000 0.6515044
 #' 
 #' # Get model's load
-#' model$load$load
+#' model$loads$load
 #' # [1] 0.6666667
 #' 
-#' # Get model's load ratios
-#' model$load$ratios
+#' # Get variable loads
+#' model$loads
+#' # $load
+#' # [1] 0.6666667
 #' # $input
 #' # Employees Depreciation
 #' # 0.6666667    1.3333333
+#' # $iinput
+#' # Employees 
+#' #         1 
 #' # $output
 #' # CarsSold WorkOrders
 #' # 1.2663476  0.7336524 
-#' 
+#' # $ioutput
+#' # WorkOrders 
+#' #          2 
+#'
+#' # Summarize the model and print additional information
+#' summary(model)
+#' # Model name              ADEA for cardealers4 dataset
+#' # Orientation                                    input
+#' # Load orientation                            inoutput
+#' # Model load                         0.666666666666659
+#' # Input load.Employees               0.666666666666659
+#' # Input load.Depreciation             1.33333333333334
+#' # Output load.CarsSold                 1.1025075271907
+#' # Output load.WorkOrders               0.8974924728093
+#' # Inputs                        Employees Depreciation
+#' # Outputs                          CarsSold WorkOrders
+#' # nInputs                                            2
+#' # nOutputs                                           2
+#' # nVariables                                         4
+#' # nEfficients                                        2
+#' # Eff. Mean                           0.90022318389575
+#' # Eff. sd                            0.135194867030839
+#' # Eff. Min.                          0.651504424778761
+#' # Eff. 1st Qu.                       0.872252747252747
+#' # Eff. Median                        0.942225031605562
+#' # Eff. 3rd Qu.                       0.997898230088495
+#' # Eff. Max.                                          1
 #' @export
-adea <- function(input, output, orientation = c('input', 'output'), load.orientation = c('inoutput', 'input', 'output'), name = '', eff.tolerance = .001)
+adea <- function(input, output, orientation = c('input', 'output'), load.orientation = c('inoutput', 'input', 'output'), name = '', solver = 'auto')
 {
-    ## Define an internal parameter
-    ## The number of digit used to round the loads
-    load.digits = 4
-    
     ## Check input and output
-    err <- adea.check(input = input, output = output, ux = NULL, vy = NULL, eff = NULL)
-    if (err != TRUE) stop(err)
+    err <- adea_check(input = input, output = output, ux = NULL, vy = NULL, eff = NULL)
+    if (!isTRUE(err)) stop(err)
 
     ## Check other parameters
     orientation <- match.arg(orientation)
     load.orientation <- match.arg(load.orientation)
-    if (!is.numeric(eff.tolerance) || eff.tolerance < 0 || eff.tolerance > 1) stop(paste('adea:', gettext('eff.tolerance is not numeric a value between 0 and 1')))
 
-    ## Check for vectors and build matrix
-    if (is.vector(input)) input <- matrix(input, ncol = 1)
-    if (is.vector(output)) output <- matrix(output, ncol = 1)
-    
-    ## Setup input and output names
-    if (is.null(colnames(input))) colnames(input) <- paste('input_', 1:ncol(input), sep='')
-    if (is.null(colnames(output))) colnames(output) <- paste('output_', 1:ncol(output), sep='')
-    
-    ## Setup DMU names
-    if (is.null(rownames(input))) {
-        if (is.null(rownames(output))) rownames(output) <- paste('DMU', 1:nrow(input), sep = '-')
-        rownames(input) <- rownames(output)
-    } else {
-        if (is.null(rownames(output))) rownames(output) <- rownames(input)
-    }
+    ## Canonize input and output format
+    data <- adea_setup(input, output)
+    input <- data$input
+    output <- data$output
 
+    ## Call to low level function
+    adea_(input = input, output = output, orientation = orientation, load.orientation = load.orientation, name = name, solver = solver)
+}
 
-
-    ## Solve dea model
-    .dea <- lp_solve_dea(input = input, output = output, orientation = orientation, solve = TRUE)
-
-    ## Compute loads
-    .dea.loads <- adea_loads(input, output, .dea$ux, .dea$vy)
-
+## Same as adea but without exhaustive input check, for internal use only
+adea_ <- function(input, output, orientation, load.orientation, name, solver)
+{
     ## Solve adea model
-    .adea <- lp_solve_adea(input = input, output = output, eff = .dea$eff, orientation = orientation, load.orientation = load.orientation, solve = TRUE, lp = .dea$lp)
-    
-    ## Compute loads
-    .adea.loads <- adea_loads(input, output, .adea$ux, .adea$vy, load.orientation = load.orientation)
-    
-    ## Check for consistency
-    if (
-        any(.adea.loads$ratios$input < .adea.loads$ratios$input[.dea.loads$iinput]) &&
-        any(.adea.loads$ratios$output < .adea.loads$ratios$output[.dea.loads$inoutput])
-    ) stop(paste(gettext("Internal error: The minimum value in first and second stage don't agree.")))
-    
-    ## Store rations
-    .adea.loads$ratios <- switch(load.orientation,
-                                 input = list(input = .adea.loads$ratios$input),
-                                 output = list(output = .adea.loads$ratios$output),
-                                 inoutput = list(input = .adea.loads$ratios$input, output = .adea.loads$ratios$output)
-                                 )
-    ## Compute model load
-    .adea.loads$load <- switch(load.orientation,
-                               input = min(.adea.loads$ratios$input),
-                               output = min(.adea.loads$ratios$output),
-                               inoutput = min(.adea.loads$ratios$input, .adea.loads$ratios$output)
-                               )
-    ## Compute index
-    .adea.loads$iinput <- switch(load.orientation,
-                                 input = which(round(.adea.loads$ratios$input - .adea.loads$load, load.digits) == 0),
-                                 output = NULL,
-                                 inoutput = which(round(.adea.loads$ratios$input - .adea.loads$load, load.digits) == 0)
-                                 )
-    .adea.loads$ioutput<- switch(load.orientation,
-                                 input = NULL,
-                                 output = which(round(.adea.loads$ratios$output - .adea.loads$load, load.digits) == 0),
-                                 inoutput = which(round(.adea.loads$ratios$output - .adea.loads$load, load.digits) == 0)
-                                 )
-
-    ## Prepare list to return
-    .adea$load <- .adea.loads
-
-    ## Include efficiencies scores
-    .adea$eff <- .dea$eff
-    
-    ## Drop unused information
-    .adea$status <- NULL
-    ##.adea$lp <- NULL
-    
-    ## Store name and orientation
-    .adea$name <- name
-    .adea$orientation <- orientation
-    .adea$load.orientation <- load.orientation
-
-    ## Number of efficiency units
-    .adea$neff <- sum((.dea$eff < 1 + eff.tolerance) & (.dea$eff > 1 - eff.tolerance))
-
-    ## Store input and ouput
-    ## .adea$input <- input
-    ## .adea$output <- output
+    .adea <- roi_adea(input = input, output = output, orientation = orientation, load.orientation = load.orientation, solver = solver)
 
     ## Compute and store virtual input and output as described in @references A new approach to the bi-dimensional representation of the DEA efficient frontier with multiple inputs and outputs
-    if (orientation == 'output') s <- rowSums(.adea$vy)
-    if (orientation == 'input') s <- rowSums(.adea$ux)
-    ux <- .adea$ux/s
-    vy <- .adea$vy/s
-    .adea$vinput <- rowSums(ux * input)
-    .adea$voutput <- rowSums(vy * output)
-    
-    ## Change the class of the object
+    virtuals <- virtual_dea(input = input, output = output, orientation = orientation, ux = .adea$ux, vy = .adea$vy)
+
+    .adea <- list('name' = name,
+                  'orientation' = orientation,
+                  'load.orientation' = load.orientation,
+                  'inputnames' = colnames(input),
+                  'outputnames' = colnames(output),
+                  'eff' = .adea$eff,
+                  'loads' = .adea$loads,
+                  'ux' = .adea$ux,
+                  'vy' = .adea$vy,
+                  'vinput' = virtuals$vinput,
+                  'voutput' = virtuals$voutput,
+                  'solver' = .adea$solver)
+
+    ## Set up the class of the object
     class(.adea) <- 'adea'
-    return(.adea)
+    .adea
 }

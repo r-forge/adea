@@ -1,4 +1,5 @@
 ^makefile$
 ^adea\.Rcheck$
 ^doc$
+^.*\.log$
 ^Meta$

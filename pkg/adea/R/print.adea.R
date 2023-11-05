@@ -5,7 +5,6 @@
 #' @method print adea
 #' @export
 print.adea <- function(x, ...) {
-    eff <- x$eff
-    print(eff, ...)
+    print(x$eff, ...)
     invisible(x)
 }

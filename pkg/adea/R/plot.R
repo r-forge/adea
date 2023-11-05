@@ -36,14 +36,16 @@
 #' adea <- adea(input = input, output = output)
 #' plot(adea)
 #' @seealso \code{\link{adea}}
+#' @importFrom graphics abline
+#' @importFrom graphics text
 #' @export
 plot.adea <- function(x, main = NULL, xlab = NULL, ylab= NULL, labels = NULL, labels.pos = 4, lcol = "black", ...) {
-    if (is.null(main)) main <- gettext("ADEA efficient frontier")
-    if (x$name != "") main <- paste(main, gettext("for model:"), x$name)
+    if (is.null(main)) main <- gettext("DEA efficient frontier")
+    if (x$name != "") main <- paste0(main, " ", gettext("for model"), ": ", x$name)
     if (is.null(xlab)) xlab <- gettext("Virtual input")
     if (is.null(ylab)) ylab <- gettext("Virtual output")
     plot(x$vinput, x$voutput, main = main, xlab = xlab, ylab = ylab, ...)
     abline(a = 0, b = 1, col = lcol)
     if (!is.null(labels)) text(x$vinput, x$voutput, labels = labels, pos = labels.pos)
     invisible(list(vinput = x$vinput, voutput = x$voutput))
-    }
+}

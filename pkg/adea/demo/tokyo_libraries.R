@@ -1,4 +1,4 @@
-# Read data
+# Load data
 data('tokyo_libraries')
 input <- tokyo_libraries[,1:4]
 output <-tokyo_libraries[,5:6]
@@ -9,8 +9,10 @@ sol.adea <- adea(input, output)
 sol.adea$eff
 # Weights
 cbind(sol.adea$ux, sol.adea$vy)
-# Load ratios
-sol.adea$load$ratios
-# Load
-sol.adea$load$load
+# Input variable loads
+sol.adea$loads$input
+# Output variable loads
+sol.adea$loads$output
+# Model load
+sol.adea$loads$load
 

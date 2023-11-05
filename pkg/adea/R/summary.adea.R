@@ -1,29 +1,47 @@
 #' summary method for adea class
+#' 
+#' Extract information from a fsdea class object and compute some more.
+#' The default tolerance to consider a DMU as efficient one is .001 in reports.
+#' Use `eff.tolerance` parameter to consider another tolerance between 0 and 1.
+#' 
 #' @aliases summary.adea
 #' @importFrom stats sd
 #' @param object is the object of class adea to summarise
-#' @param ... optional arguments to 'print'
+#' @param ... For compatibility reason, see note about `eff.tolerance` parameter.
 #' @method summary adea
 #' @export
 summary.adea <- function(object, ...) {
-    eps <- 1e-6
-    cat(paste0(gettext('Model name'), ': ', object$name, '\n'))
-    cat(paste0(gettext('Orientation is'), ' ', object$orientation, '\n'))
-    cat('Inputs:', names(object$load$ratios$input), '\n')
-    cat('Outputs:', names(object$load$ratios$output), '\n')
-    cat(paste0(gettext('Input loads'), ': '), object$load$ratios$input, '\n')
-    cat(paste0(gettext('Output loads'), ': '), object$load$ratios$output, '\n')
-    cat(paste0(gettext('Model load'), ': ', object$load$load, '\n'))
-    ## print(x$eff, ...)
-    cat(paste0(gettext('#Efficients'), ': ', object$neff, '\n'))
-    cat(paste0(gettext('Efficiencies'), ':\n'))
-    print(object$eff)
-    cat(paste0(gettext('Summary of efficiencies'), ':\n'))
-    neff <- sum(abs(object$eff - 1) < eps)
-    n <- nrow(object$ux)
-    s <- summary(object$eff)
-    s <- c(s[4], sd(object$eff), s[1:3], s[5:6])
-    names(s)[2] <- 'sd'
-    print(s, ...)
-    invisible(object)
+    ## Check input parameters
+    args <- list(...)
+    eff.tolerance <- args$eff.tolerance
+    ## Check if eff.tolerance is missing
+    if (is.null(eff.tolerance)) {
+        eff.tolerance <- .001
+    } else {
+        if (!is.numeric(eff.tolerance) || eff.tolerance < 0 || eff.tolerance > 1) stop(paste('summary.adea:summary.adea.R:18', gettext('eff.tolerance is not a number between 0 and 1')))
+    }
+    ## Summary dea information
+    ss <- summary.dea(object, eff.tolerance = eff.tolerance)
+    s <- list()
+    s['Model name'] <- ss['Model name']
+    ss['Model name'] <- NULL
+    s['Orientation'] <- ss['Orientation']
+    ss['Orientation'] <- NULL
+    s['Load orientation'] <- object$load.orientation
+    s['Model load'] <- object$loads$load
+    s[['Input load']] <- object$loads$input
+    s[['Output load']] <- object$loads$output
+    s <- c(s, ss)
+    class(s) <- 'summary.adea'
+    s
+}
+
+#' @export
+#' @aliases print.summay.adea
+print.summary.adea <- function(x, ...) {
+    lx <- data.frame(unlist(x))
+    names(lx) <- ''
+    rownames(lx) <- gettext(rownames(lx))
+    print(lx, ...)
+    invisible(x)
 }

@@ -11,19 +11,19 @@
 #' @param lp The problem returned from lp_solve.dea or NULL
 #' @param max.iterations Maximum number of iterations before stop
 #' @return lp adea problem for the given input, output and scores
-lp_solve_cadea <- function(input, output, eff = NULL, orientation = c('input', 'output'), load.orientation = c('inoutput', 'input', 'output'), load.min, load.max, max.iterations = 25, solve = FALSE, lp = NULL)
+lp_solve_cadea <- function(input, output, eff = NULL, orientation, load.orientation, load.min, load.max, max.iterations = 25, solve = TRUE, lp = NULL)
 {
     ## Setup internal parameter
     load.tolerance <- 1e-6
     err.tolerance <- 1e-6
     
     ## Check input and output
-    err <- adea.check(input = input, output = output, eff = eff)
+    err <- adea_check(input = input, output = output, eff = eff)
     if (err != TRUE) stop(err)
 
     ## Check other input parameters
-    orientation <- match.arg(orientation)
-    load.orientation <- match.arg(load.orientation)
+    orientation <- match.arg(orientation, c('input', 'output'))
+    load.orientation <- match.arg(load.orientation, c('inoutput', 'input', 'output'))
     
     ## Standardise input and output
     dat <- adea_setup(input, output)
@@ -32,12 +32,12 @@ lp_solve_cadea <- function(input, output, eff = NULL, orientation = c('input', '
 
     ## Check if lp is provided if not, build as first stage
     if (missing(lp) || is.null(lp)  || missing(eff) || is.null(eff)) {
-        .lp_solve_dea <- lp_solve_adea(input = input, output = output, eff = eff, orientation = orientation, load.orientation = load.orientation)
+        .lp_solve_dea <- suppressWarnings(lp_solve_adea(input = input, output = output, eff = eff, orientation = orientation, load.orientation = load.orientation))
         lp <- .lp_solve_dea$lp
     }
 
     ## Avoid scaling
-    lp.control(lp, scaling = c("none"))
+    lpSolveAPI::lp.control(lp, scaling = c("none"))
 
     ## Check load.min and load.max
     if (!is.numeric(load.min)) stop(paste('cadea:', gettext('load.min value is not numeric')))
@@ -62,7 +62,7 @@ lp_solve_cadea <- function(input, output, eff = NULL, orientation = c('input', '
     status <- NULL
     ux <- NULL
     vy <- NULL
-    ndmu <- .adea.check(input)
+    ndmu <- .adea_check(input)
     ni <- ncol(input)
     no <- ncol(output)
     nio <- ni + no
@@ -88,13 +88,13 @@ lp_solve_cadea <- function(input, output, eff = NULL, orientation = c('input', '
                         )
     ## All alpha columns has been keep
     objective <- c(objective, rep(0, nio + 1))
-    set.objfn(lp, objective)
+    lpSolveAPI::set.objfn(lp, objective)
 
     ## Remove score constraints
-    delete.constraint(lp, (ndmu + 1) * ndmu + 1:ndmu)
+    lpSolveAPI::delete.constraint(lp, (ndmu + 1) * ndmu + 1:ndmu)
     
     ## Remove alpha score constraints
-    delete.constraint(lp, (ndmu + 1) * ndmu + 1:nalpha)
+    lpSolveAPI::delete.constraint(lp, (ndmu + 1) * ndmu + 1:nalpha)
 
     ## Add updated alpha score constraints
     lp_solve_add_alpha_constraints(lp = lp, input = input, output = output, eff = eff, orientation = orientation, load.orientation = load.orientation)
@@ -102,13 +102,12 @@ lp_solve_cadea <- function(input, output, eff = NULL, orientation = c('input', '
     ## Add load constraints as variable bounds
     if (length(load.min) == 1) load.min <- rep(load.min, nio)
     if (length(load.max) == 1) load.max <- rep(load.max, nio)
-    if (load.orientation == 'input') set.bounds(lp, lower = load.min[1:ni], upper = load.max[1:ni], columns = ndmu * nio + 1:ni)
-    if (load.orientation == 'output') set.bounds(lp, lower = load.min[1:no], upper = load.max[1:no], columns = ndmu * nio + ni + 1:no)
-    if (load.orientation == 'inoutput') set.bounds(lp, lower = load.min[1:nio], upper = load.max[1:nio], columns = ndmu * nio + 1:nio)
+    if (load.orientation == 'input') lpSolveAPI::set.bounds(lp, lower = load.min[1:ni], upper = load.max[1:ni], columns = ndmu * nio + 1:ni)
+    if (load.orientation == 'output') lpSolveAPI::set.bounds(lp, lower = load.min[1:no], upper = load.max[1:no], columns = ndmu * nio + ni + 1:no)
+    if (load.orientation == 'inoutput') lpSolveAPI::set.bounds(lp, lower = load.min[1:nio], upper = load.max[1:nio], columns = ndmu * nio + 1:nio)
 
     ## Solve the model
     if (solve) {
-
 
         .continue <- TRUE
         .iteration <- 1
@@ -123,10 +122,9 @@ lp_solve_cadea <- function(input, output, eff = NULL, orientation = c('input', '
             
             ## Update model with efficiencies
             ## Remove old score alpha constraints
-            delete.constraint(lp, (ndmu + 1) * ndmu + nalpha + 1:nalpha)
+            lpSolveAPI::delete.constraint(lp, (ndmu + 1) * ndmu + nalpha + 1:nalpha)
             ## Add new score alpha constraints
             lp_solve_add_alpha_constraints(lp = lp, input = input, output = output, eff = eff, orientation = orientation, load.orientation = load.orientation)
-
 
             ## Call to solver
             status = solve(lp)
@@ -135,23 +133,18 @@ lp_solve_cadea <- function(input, output, eff = NULL, orientation = c('input', '
             if (status != 0) stop(paste0(gettext('Unable to solve cadea model. Solver status is '), status, '. (', lpsolve.status.txt[status + 1], '.)'))
 
             ## Get u and v values
-            sol <- get.variables(lp)[1:(ndmu * nio)]
+            sol <- lpSolveAPI::get.variables(lp)[1:(ndmu * nio)]
             sol <- matrix(sol, nrow = ndmu, ncol = nio, byrow = TRUE)
-            rownames(sol) <- rownames(input)
 
             ## Get weights for outputs, named vy for compatibility with Benchmarking package
-            vy <- sol[, 1:no]
-
-            ## Check for one column
-            if (no == 1) vy <- matrix(vy, nrow = ndmu, ncol = 1)
-            if (is.null(colnames(output))) colnames(vy) <- paste('v_', 1:no, sep='') else colnames(vy) <- paste('v_', colnames(output), sep='')
+            vy <- sol[, 1:no, drop = FALSE]
+            rownames(vy) <- rownames(output)
+            colnames(vy) <- colnames(output)
 
             ## Get weights for inputs, named ux for compatibility with Benchmarking package
-            ux = sol[, (no+1):nio]
-
-            ## Check for one column
-            if (ni == 1) ux <- matrix(ux, nrow = ndmu, ncol = 1)
-            if (is.null(colnames(input))) colnames(ux) <- paste('u_', 1:ni, sep='') else colnames(ux) <- paste('u_', colnames(input), sep='')
+            ux = sol[, (no+1):nio, drop = FALSE]
+            rownames(ux) <- rownames(input)
+            colnames(ux) <- colnames(input)
 
             ## Compute scores
             eff <- switch(orientation,
@@ -159,9 +152,6 @@ lp_solve_cadea <- function(input, output, eff = NULL, orientation = c('input', '
                           output = rowSums(ux * input)
                           )
             names(eff) <- rownames(input)
-
-
-            
 
             ## Compute new loads and update .continue
             .cadea.loads <- adea_loads(input = input, output = output, ux = ux, vy = vy, load.orientation = load.orientation)
@@ -202,8 +192,14 @@ lp_solve_cadea <- function(input, output, eff = NULL, orientation = c('input', '
     ## cat("lp_solve_cadea: Final loads:\n")
     ## print(.cadea.loads)
     
+    ## Setup names
+    rownames(ux) <- rownames(input)
+    colnames(ux) <- colnames(input)
+    rownames(vy) <- rownames(output)
+    colnames(vy) <- colnames(output)
+    
     ## Return the list values
-    l <- list(lp = lp, status = status, ux = ux, vy = vy, eff = eff, iterations = .iteration)
+    l <- list(lp = lp, status = status, ux = ux, vy = vy, iterations = .iteration, eff = eff, solver = 'lpsolve')
     class(l) <- 'cadea'
     l
 }

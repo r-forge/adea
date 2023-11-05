@@ -13,7 +13,7 @@
 <meta name="author" content="Fernando Fernandez-Palacin" />
 <meta name="author" content="Manuel Munoz-Marquez" />
 
-<meta name="date" content="2022-02-09" />
+<meta name="date" content="2023-11-05" />
 
 <title>Influential or leverage units in ADEA</title>
 
@@ -30,22 +30,6 @@ document.addEventListener('DOMContentLoaded', function(e) {
   }
 });
 </script>
-<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
-// v0.0.1
-// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
-
-document.addEventListener('DOMContentLoaded', function() {
-  const codeList = document.getElementsByClassName("sourceCode");
-  for (var i = 0; i < codeList.length; i++) {
-    var linkList = codeList[i].getElementsByTagName('a');
-    for (var j = 0; j < linkList.length; j++) {
-      if (linkList[j].innerHTML === "") {
-        linkList[j].setAttribute('aria-hidden', 'true');
-      }
-    }
-  }
-});
-</script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -55,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -69,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -103,7 +89,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -116,7 +102,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -137,13 +123,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -154,6 +147,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <style type="text/css">body {
 background-color: #fff;
@@ -350,90 +365,118 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Influential or leverage units in ADEA</h1>
 <h4 class="author">Fernando Fernandez-Palacin<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></h4>
 <h4 class="author">Manuel Munoz-Marquez<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></h4>
-<h4 class="date">2022-02-09</h4>
+<h4 class="date">2023-11-05</h4>
 
 
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>An influential or leverage units is a one that produce a big changes in results. In this case is a unit that produce a big change in model load.</p>
-<p>For more information about loads help of the package about <code>adea</code> or see <span class="citation">(Fernandez-Palacin, Lopez-Sanchez, and Munoz-Marquez 2018)</span> and <span class="citation">(Villanueva-Cantillo and Munoz-Marquez 2021)</span>.</p>
-<p>Let’s load and have a look at the <code>tokyo_libraries</code> dataset with</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">data</span>(tokyo_libraries)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">head</span>(tokyo_libraries)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="co">#&gt;   Area.I1 Books.I2 Staff.I3 Populations.I4 Regist.O1 Borrow.O2</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="co">#&gt; 1   2.249  163.523       26         49.196     5.561   105.321</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="co">#&gt; 2   4.617  338.671       30         78.599    18.106   314.682</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="co">#&gt; 3   3.873  281.655       51        176.381    16.498   542.349</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="co">#&gt; 4   5.541  400.993       78        189.397    30.810   847.872</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="co">#&gt; 5  11.381  363.116       69        192.235    57.279   758.704</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="co">#&gt; 6  10.086  541.658      114        194.091    66.137  1438.746</span></span></code></pre></div>
+<p>An influential or leverage unit is one that produces significant
+changes in results. In this context, it refers to a unit that has a
+substantial impact on the model load.</p>
+<p>For more information about loads see the help of the package or see
+<span class="citation">(Fernandez-Palacin, Lopez-Sanchez, and
+Munoz-Marquez 2018)</span> and <span class="citation">(Villanueva-Cantillo and Munoz-Marquez
+2021)</span>.</p>
+<p>Let’s load and examine the <code>tokyo_libraries</code> dataset using
+the following code:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(tokyo_libraries)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tokyo_libraries)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Area.I1 Books.I2 Staff.I3 Populations.I4 Regist.O1 Borrow.O2</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   2.249  163.523       26         49.196     5.561   105.321</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   4.617  338.671       30         78.599    18.106   314.682</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   3.873  281.655       51        176.381    16.498   542.349</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   5.541  400.993       78        189.397    30.810   847.872</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  11.381  363.116       69        192.235    57.279   758.704</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  10.086  541.658      114        194.091    66.137  1438.746</span></span></code></pre></div>
 </div>
 <div id="searching-for-influential-units" class="section level1">
 <h1>Searching for influential units</h1>
-<p><code>adea_load_leverage</code> function looks for units that produce higher change in loads. The following call</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>input &lt;-<span class="st"> </span>tokyo_libraries[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>output &lt;-<span class="st"> </span>tokyo_libraries[, <span class="dv">5</span><span class="op">:</span><span class="dv">6</span>]</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="kw">adea_load_leverage</span>(input, output)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="co">#&gt;        load  load.diff DMUs</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="co">#&gt; 1 0.6028718 0.14740482   23</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="co">#&gt; 2 0.4004102 0.05505682    6</span></span></code></pre></div>
-<p>shows that units 23 and 6 produce changes greater than the default value for <code>load.diff</code> which is 0.05.</p>
-<p>The output is sorted in decreasing order of <code>load.diff</code> which is the change in load model.</p>
-<p>Those call only considers changes taking units one by one, but using <code>ndel</code> parameter remove of more than one unit at the same time can be tested. The following call tests all groups of two units</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">adea_load_leverage</span>(input, output, <span class="dt">load.diff =</span> <span class="fl">0.1</span>, <span class="dt">ndel =</span> <span class="dv">2</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="co">#&gt;         load load.diff   DMUs</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="co">#&gt; 1  0.8333337 0.3778667  9, 23</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="co">#&gt; 2  0.6315800 0.1761130 20, 23</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="co">#&gt; 3  0.6315800 0.1761130 15, 23</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a><span class="co">#&gt; 4  0.6315800 0.1761130  4, 23</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a><span class="co">#&gt; 5  0.6315800 0.1761130 12, 23</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a><span class="co">#&gt; 6  0.6315800 0.1761130 14, 23</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a><span class="co">#&gt; 7  0.6315800 0.1761130 16, 23</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a><span class="co">#&gt; 8  0.6315800 0.1761130 18, 23</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a><span class="co">#&gt; 9  0.6315800 0.1761130 22, 23</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a><span class="co">#&gt; 10 0.6315800 0.1761130 11, 23</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a><span class="co">#&gt; 11 0.6315800 0.1761130 10, 23</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a><span class="co">#&gt; 12 0.6315800 0.1761130  3, 23</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a><span class="co">#&gt; 13 0.6225027 0.1670357  2, 23</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a><span class="co">#&gt; 14 0.6107273 0.1552603  7, 23</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a><span class="co">#&gt; 15 0.6028718 0.1474048     23</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a><span class="co">#&gt; 16 0.6020337 0.1465667 13, 23</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a><span class="co">#&gt; 17 0.6010336 0.1455666  1, 23</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true"></a><span class="co">#&gt; 18 0.5980232 0.1425562  8, 23</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true"></a><span class="co">#&gt; 19 0.5879663 0.1324993 21, 23</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true"></a><span class="co">#&gt; 20 0.3334068 0.1220602   6, 9</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true"></a><span class="co">#&gt; 21 0.3430363 0.1124307   5, 6</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true"></a><span class="co">#&gt; 22 0.5599886 0.1045216 17, 23</span></span></code></pre></div>
-<p>This results in a very long list, so the number or groups in output can be limited, for example, to 10, as in the following call</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">adea_load_leverage</span>(input, output, <span class="dt">load.diff =</span> <span class="fl">0.1</span>, <span class="dt">ndel =</span> <span class="dv">2</span>, <span class="dt">nmax =</span> <span class="dv">10</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="co">#&gt;         load load.diff   DMUs</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="co">#&gt; 1  0.8333337 0.3778667  9, 23</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="co">#&gt; 2  0.6315800 0.1761130 20, 23</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="co">#&gt; 3  0.6315800 0.1761130 15, 23</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="co">#&gt; 4  0.6315800 0.1761130  4, 23</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="co">#&gt; 5  0.6315800 0.1761130 12, 23</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="co">#&gt; 6  0.6315800 0.1761130 14, 23</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a><span class="co">#&gt; 7  0.6315800 0.1761130 16, 23</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a><span class="co">#&gt; 8  0.6315800 0.1761130 18, 23</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a><span class="co">#&gt; 9  0.6315800 0.1761130 22, 23</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a><span class="co">#&gt; 10 0.6315800 0.1761130 11, 23</span></span></code></pre></div>
-<p>This shows that the best option to remove two units is not the same as remove the two firsts in the one by one analysis. This is because that there are interactions between the units effects.</p>
-<p>From this point, decision maker or researcher have to handle this units properly, to avoid biases in DEA results.</p>
-<p>Each call to <code>adea_load_leverage</code> requires to solve a big set of a large linear program, so is a very demanding of computation resource, and can require a very large time, so be patient.</p>
+<p>The <code>adea_load_leverage</code> function searches for units that
+cause substantial changes in loads. The following call demonstrates
+this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>input <span class="ot">&lt;-</span> tokyo_libraries[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> tokyo_libraries[, <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">adea_load_leverage</span>(input, output)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        load  load.diff DMUs</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 0.6028718 0.14740482   23</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 0.4004102 0.05505682    6</span></span></code></pre></div>
+<p>The output reveals that units 23 and 6 produce changes greater than
+the default value for <code>load.diff</code>, which is set at 0.05. The
+output is sorted in decreasing order of “load.diff,” which represents
+the change in the load model.</p>
+<p>While the previous calls only consider changes when removing units
+one by one, the <code>ndel</code> parameter allows for testing the
+removal of more than one unit at a time. The following call tests all
+combinations of two units:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">adea_load_leverage</span>(input, output, <span class="at">load.diff =</span> <span class="fl">0.1</span>, <span class="at">ndel =</span> <span class="dv">2</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         load load.diff   DMUs</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  0.8333337 0.3778667  9, 23</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  0.6315800 0.1761130 12, 23</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  0.6315800 0.1761130 10, 23</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  0.6315800 0.1761130 15, 23</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  0.6315800 0.1761130  4, 23</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  0.6315800 0.1761130 11, 23</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7  0.6315800 0.1761130 22, 23</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8  0.6315800 0.1761130 16, 23</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9  0.6315800 0.1761130 14, 23</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 0.6315800 0.1761130 18, 23</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 0.6315800 0.1761130 20, 23</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 0.6315800 0.1761130  3, 23</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 0.6225027 0.1670357  2, 23</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 0.6107273 0.1552603  7, 23</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15 0.6028718 0.1474048     23</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16 0.6020337 0.1465667 13, 23</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17 0.6010336 0.1455666  1, 23</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18 0.5980232 0.1425562  8, 23</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19 0.5879663 0.1324993 21, 23</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20 0.3334068 0.1220602   6, 9</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21 0.3430363 0.1124307   5, 6</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22 0.5599886 0.1045216 17, 23</span></span></code></pre></div>
+<p>This results in a long list, and to limit the number of groups in the
+output, you can set <code>nmax</code> to a specific value, as
+demonstrated in the following call:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">adea_load_leverage</span>(input, output, <span class="at">load.diff =</span> <span class="fl">0.1</span>, <span class="at">ndel =</span> <span class="dv">2</span>, <span class="at">nmax =</span> <span class="dv">10</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         load load.diff   DMUs</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  0.8333337 0.3778667  9, 23</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  0.6315800 0.1761130 12, 23</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  0.6315800 0.1761130 10, 23</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  0.6315800 0.1761130 15, 23</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  0.6315800 0.1761130  4, 23</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  0.6315800 0.1761130 11, 23</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7  0.6315800 0.1761130 22, 23</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8  0.6315800 0.1761130 16, 23</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9  0.6315800 0.1761130 14, 23</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 0.6315800 0.1761130 18, 23</span></span></code></pre></div>
+<p>It’s important to note that the best option for removing two units is
+not the same as removing the two units individually in the one-by-one
+analysis. This discrepancy arises due to interactions between the
+effects of the units.</p>
+<p>From this point forward, decision-makers or researchers must handle
+these units carefully to avoid biases in DEA results.</p>
+<p>Each call to <code>adea_load_leverage</code> requires solving a large
+linear program, making it computationally demanding and potentially
+time-consuming. Patience is essential when working with this
+function.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
-<div id="refs" class="references hanging-indent">
-<div id="ref-Fernandez2018">
-<p>Fernandez-Palacin, Fernando, Marı́a Auxiliadora Lopez-Sanchez, and Manuel Munoz-Marquez. 2018. “Stepwise selection of variables in DEA using contribution loads.” <em>Pesquisa Operacional</em> 38 (1): 31–52. <a href="http://dx.doi.org/10.1590/0101-7438.2018.038.01.0031">http://dx.doi.org/10.1590/0101-7438.2018.038.01.0031</a>.</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Fernandez2018" class="csl-entry">
+Fernandez-Palacin, Fernando, Marı́a Auxiliadora Lopez-Sanchez, and Manuel
+Munoz-Marquez. 2018. <span>“<span class="nocase">Stepwise selection of
+variables in DEA using contribution loads</span>.”</span> <em>Pesquisa
+Operacional</em> 38 (1): 31–52. <a href="http://dx.doi.org/10.1590/0101-7438.2018.038.01.0031">http://dx.doi.org/10.1590/0101-7438.2018.038.01.0031</a>.
 </div>
-<div id="ref-Villanueva2021">
-<p>Villanueva-Cantillo, Jeyms, and Manuel Munoz-Marquez. 2021. “Methodology for Calculating Critical Values of Relevance Measures in Variable Selection Methods in Data Envelopment Analysis.” <em>European Journal of Operational Research</em> 290 (2): 657–70. <a href="https://doi.org/10.1016/j.ejor.2020.08.021">https://doi.org/10.1016/j.ejor.2020.08.021</a>.</p>
+<div id="ref-Villanueva2021" class="csl-entry">
+Villanueva-Cantillo, Jeyms, and Manuel Munoz-Marquez. 2021.
+<span>“Methodology for Calculating Critical Values of Relevance Measures
+in Variable Selection Methods in Data Envelopment Analysis.”</span>
+<em>European Journal of Operational Research</em> 290 (2): 657–70. <a href="https://doi.org/10.1016/j.ejor.2020.08.021">https://doi.org/10.1016/j.ejor.2020.08.021</a>.
 </div>
 </div>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr />
 <ol>
 <li id="fn1"><p>Universidad de Cádiz, <a href="mailto:fernando.fernandez@uca.es" class="email">fernando.fernandez@uca.es</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>

@@ -8,10 +8,8 @@
 #' @method print adeaparametric
 #' @export
 print.adeaparametric <- function(x, ...) {
-    s <- data.frame(x$load, x$neff, x$nt, x$ni, x$no, x$namesi, x$nameso)
-    colnames(s) <- gettext(c('Load',  '#Efficients', '#Variables', '#Inputs', '#Outputs', 'Inputs', 'Outputs'))
-    s <- s[nrow(s):1,]
-    s <- s[s[, 1] > 0,]
-    print(s, ...)
+    models <- summary(x)
+    models <- models$models
+    print(setNames(models, gettext(names(models))), ...)
     invisible(x)
 }
