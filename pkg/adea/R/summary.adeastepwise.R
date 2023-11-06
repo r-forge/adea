@@ -2,11 +2,23 @@
 #'
 #' For the final model of adea_stepwise function print the model name, orientation, load orientation, a summary, the input variables, and outputs variables.
 #' 
-#' @name summary.adeastepwise
+#' The default tolerance to consider a DMU as efficient one is .001 in reports.
+#' Use `eff.tolerance` parameter to consider another tolerance between 0 and 1.
+#' 
 #' @param object Is the object of class adeastepwise to summarise.
-#' @param eff.tolerance Tolerance value for efficiencies to conside a DMU an efficient one. Its default value is .001.
+#' @param ... For compatibility reason, see note about `eff.tolerance` parameter.
 #' @method summary adeastepwise
-summary.adeastepwise <- function(object, eff.tolerance = .001) {
+summary.adeastepwise <- function(object, ...) {
+    ## Check input parameters
+    args <- list(...)
+    eff.tolerance <- args$eff.tolerance
+    ## Check if eff.tolerance is missing
+    if (is.null(eff.tolerance)) {
+        eff.tolerance <- .001
+    } else {
+        if (!is.numeric(eff.tolerance) || eff.tolerance < 0 || eff.tolerance > 1) stop(paste('summary.adeaparametric:summary.adeaparametric.R:18', gettext('eff.tolerance is not a number between 0 and 1')))
+    }
+    ## Do the job
     l <- list()
     l['Model name'] <- object$name
     l['Orientation'] <- object$orientation

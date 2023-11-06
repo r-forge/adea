@@ -2,7 +2,7 @@
 % Please edit documentation in R/adea_loads.R
 \name{adea_loads}
 \alias{adea_loads}
-\title{Compute the variables load ratios in DEA}
+\title{Compute the variables loads for DEA analysis with specified weights}
 \usage{
 adea_loads(
   input,
@@ -13,45 +13,62 @@ adea_loads(
 )
 }
 \arguments{
-\item{input}{A matrix or a data frame with the inputs of units to be evaluated, one row for each DMU and one column for each input.}
+\item{input}{A matrix or a data frame containing the inputs of the units to be evaluated, with one row for each DMU and one column for each input.}
 
-\item{output}{A matrix or a data frame with the outputs of units to be evaluated, one row for each DMU and one column for each output.}
+\item{output}{A matrix or a data frame containing the outputs of the units to be evaluated, with one row for each DMU and one column for each output.}
 
 \item{ux}{A matrix of weights for DMUs and input variables.}
 
 \item{vy}{A matrix of weights for DMUs and output variables.}
 
-\item{load.orientation}{It allows the selection of variables to be included in load analysis.
-Its default value is "inoutput" which means that all input and all output variables will be included. Use "input" or "output" to include only input or output variables in load analysis.}
+\item{load.orientation}{This parameter allows the selection of variables to be included in load analysis. 
+The default is "inoutput" which means that all input and output variables will be included. Use "input" or "output" to include only input or output variables in load analysis.}
 }
 \value{
-Loads ratios and load for input and output variables
+Loads for model, input and output variables
 }
 \description{
-For the given input, output and two sets of weights, the function computes the loads of each variable for such values.
+The adea_loads function calculates variable loads for Data Envelopment Analysis (DEA) with user-specified weights for input and output variables.
 }
 \details{
-In DEA analysis, even when the efficiency scores remain constants, there are a great level of freedom to select the sets of weights for input and output variables.
+In DEA analysis, even when the efficiency scores remain constants, there is a significant degree of freedom in selecting the sets of weights for input and output variables.
 
-Not all those sets of weights attaches the same importance to the variables. 
-This function allows to compute the load of each variable for the given weights in order to compare different sets of weights for the same efficiencies scores.
-Also compute load.levels which are the minimum value of such loads.
+Not all sets of weights assign the same importance to the variables.
+This function allows you to compute the load of each variable based on the provided weights.
+It also computes load.levels, which represents the minimum values of such loads.
 
-Take into account that different sets of weights means different ways to model the efficiency.
+It's important to note that different sets of weights result in different ways to model efficiency.
+This function does not solve any model.
+It provides the loads for the specified weights, as described in the theoretical ADEA model.
 
-This function does not solve any model, only if ux and vy are the optimal values for the adea model, this function provides the load-levels as described in the theoretical adea model.
+This function is primarily intended for research and internal use.
 }
 \examples{
 # Load data
 data('cardealers4')
 # Define input and output
-input <- cardealers4[, 1:2]
-output <- cardealers4[, 3:4]
+input <- cardealers4[, c('Employees', 'Depreciation')]
+output <- cardealers4[, c('CarsSold', 'WorkOrders')]
 # Make dea analysis
-model <- dea(input, output, RTS = 'crs', DUAL = TRUE)
+model <- dea(input, output)
 # Show results
 model
+#   Dealer A  Dealer B  Dealer C  Dealer D  Dealer E  Dealer F
+# 0.9915929 1.0000000 0.8928571 0.8653846 1.0000000 0.6515044 
 # Compute loads for such weights
 adea_loads(input, output, model$ux, model$vy)
+# $load
+# [1] 0
+# $input
+#    Employees Depreciation 
+#            0            2 
+# $iinput
+# Employees 
+#         1 
+# $output
+#   CarsSold WorkOrders 
+#  1.1025075  0.8974925 
+# $ioutput
+# WorkOrders 
 
 }

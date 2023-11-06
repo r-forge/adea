@@ -7,10 +7,14 @@
 \method{summary}{adeastepwise}(object, ...)
 }
 \arguments{
-\item{object}{is the object of class adeastepwise to summarise.}
+\item{object}{Is the object of class adeastepwise to summarise.}
 
-\item{...}{Optional arguments to "print".}
+\item{...}{For compatibility reason, see note about `eff.tolerance` parameter.}
 }
 \description{
 For the final model of adea_stepwise function print the model name, orientation, load orientation, a summary, the input variables, and outputs variables.
+}
+\details{
+The default tolerance to consider a DMU as efficient one is .001 in reports.
+Use `eff.tolerance` parameter to consider another tolerance between 0 and 1.
 }

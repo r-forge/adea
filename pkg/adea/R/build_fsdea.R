@@ -13,7 +13,6 @@
 #' @param ninputs a number which is the number input features, variables, to be selected. Its default value is the number of input variables.
 #' @param noutputs a number which is the number output features, variables, to be selected. Its default value is the number of output variables.
 #' @param nvariables a number of total features, variables, to be selected. Only if both ninputs and noutputs are omitted. In other case it is ignored.
-#' @param solver Any of the available solver that will be used by ROI to solve the optimization problem. Use <code>ROI_installed_solvers()</code> to list them.
 #' @return lp
 build_fsdea <- function(input, output, orientation = c('input', 'output'), ninputs, noutputs, nvariables, lp = NULL)
 {

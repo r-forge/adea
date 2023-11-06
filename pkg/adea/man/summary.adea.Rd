@@ -9,8 +9,10 @@
 \arguments{
 \item{object}{is the object of class adea to summarise}
 
-\item{...}{optional arguments to 'print'}
+\item{...}{For compatibility reason, see note about `eff.tolerance` parameter.}
 }
 \description{
-summary method for adea class
+Extract information from a fsdea class object and compute some more.
+The default tolerance to consider a DMU as efficient one is .001 in reports.
+Use `eff.tolerance` parameter to consider another tolerance between 0 and 1.
 }

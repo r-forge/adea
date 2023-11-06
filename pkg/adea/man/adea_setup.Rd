@@ -2,19 +2,22 @@
 % Please edit documentation in R/adea_setup.R
 \name{adea_setup}
 \alias{adea_setup}
-\title{Convert input and output in 1 column matrix}
+\title{Standarize input and output}
 \usage{
-adea_setup(input, output)
+adea_setup(input, output, ux = NULL, vy = NULL)
 }
 \arguments{
-\item{input}{A matrix or a data frame with the inputs of units to be evaluated, one row for each DMU and one column for each input.}
+\item{input}{A matrix or a data frame containing the inputs of the units to be evaluated, with one row for each DMU and one column for each input.}
 
-\item{output}{A matrix or a data frame with the outputs of units to be evaluated, one row for each DMU and one column for each output.}
+\item{output}{A matrix or a data frame containing the outputs of the units to be evaluated, with one row for each DMU and one column for each output.}
 }
 \value{
 a list with input and output converted
 }
 \description{
-Setup names for DMUs, input and outputs
+Input and outputs are converted, if require, into a matrix.
+The names of the columns and rows are also set in both.
+When input and output arguments do not provide names, standard ones are given.
+This functions does not check the arguments, so call the adea_check function first if necessary.
 }
 \keyword{internal}

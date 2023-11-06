@@ -7,10 +7,10 @@
 \method{print}{adeastepwise}(x, ...)
 }
 \arguments{
-\item{x}{Object of class adeastepwise to print.}
+\item{x}{Object of class stepwise to print.}
 
 \item{...}{Optional arguments to "print".}
 }
 \description{
-For the final model of adea_stepwise function prints a summary, the input variables, and outputs variables.
+For the final model of adeastepwise function prints a summary, the input variables, and outputs variables.
 }

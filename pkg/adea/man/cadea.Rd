@@ -12,20 +12,23 @@ cadea(
   name = "",
   load.min,
   load.max,
-  eff.tolerance = 1e-04
+  solver = "lpsolve"
 )
 }
 \arguments{
-\item{input}{A matrix or a data frame with the inputs of units to be evaluated, one row for each DMU and one column for each input.}
+\item{input}{A matrix or a data frame containing the inputs of the units to be evaluated, with one row for each DMU and one column for each input.}
 
-\item{output}{A matrix or a data frame with the outputs of units to be evaluated, one row for each DMU and one column for each output.}
+\item{output}{A matrix or a data frame containing the outputs of the units to be evaluated, with one row for each DMU and one column for each output.}
 
-\item{orientation}{Use "input" for input orientation or use "output" for output orientation in DEA model.}
+\item{orientation}{Use "input" for input orientation or "output" for output orientation in DEA model.
+The default is "input".}
 
-\item{load.orientation}{It allows the selection of variables to be included in load analysis.
-Its default value is "inoutput" which means that all input and all output variables will be included. Use "input" or "output" to include only input or output variables in load analysis.}
+\item{load.orientation}{This parameter allows the selection of variables to be included in load analysis. 
+The default is "inoutput" which means that all input and output variables will be included. Use "input" or "output" to include only input or output variables in load analysis.}
 
-\item{name}{An optional descriptive name for the model. It will be shown in print and summary results.}
+\item{name}{An optional descriptive name for the model.
+The default is an empty string. 
+This name will be displayed in printed and summarized results.}
 
 \item{load.min}{A numeric value or vector giving minimum values for loads.
 Values for \code{load.min} must belongs to [0, 1).}
@@ -35,21 +38,55 @@ Values for \code{load.max} must be greater than 1.
 If \code{load.min} or \code{load.max} are vectors then its length must be the same as the number of loads to compute.
 This means, number of inputs when \code{load.orientation} is input, number of outputs when \code{load.orientation} is output, and the sum of both when \code{load.orientation} is inoutput.}
 
-\item{eff.tolerance}{A value between 0 and 1 to tolerance when considering a DMU as efficient in reports.}
+\item{solver}{The solver used by ROI to solve the DEA optimization problem.
+The default is "auto."
+The solver must be installed and capable of solving linear programming problems. 
+Use \code{ROI_installed_solvers()} to list them.}
 }
 \value{
-The function returns an object with efficiency scores, one set of weights for inputs and other for outputs, number of efficient units, load ratios and load levels.
+The function returns a cadea object with the follosing named members:
+\itemize{
+\item name: A label of the model
+\item orientation: DEA model orientation 'input' or 'output'
+\item load.orientation: load DEA model orientation 'input', 'output', or 'inoutput'
+\item inputnames: Variable input names
+\item outputnames: Variable output names
+\item eff: is a vector with DMU's scores
+\item loads: A list with all information about loads:
+  \itemize{
+    \item load: The lowest load, which is the load of the ADEA model
+    \item input: A vector with loads of input variables
+    \item iinput: Index of input variable that reach the load of the model
+    \item output: A vector with loads of output variables
+    \item ioutput: Index of output variable that reach the load of the model
+    \item load.min: Miniminum allowed value for variable loads when load.orientation is ioutput, for input variable loads when load.orientation is input, and for output variable loads when load.orientation is output.
+    \item load.max: Mamixum allowed value for all, input or output variable loads as for load.min.
+  }
+\item ux: A set of weights for inputs
+\item vy: A set of weights for output
+\item iterations: Number of iterations to reach the stop rule
+\item vinput: Standardized virtual input dividing by the sum of the weights, see [Costa2006] in \code{\link{adea-package}}.
+\item voutput: Standardized virtual output dividing by the sum of the weights, see [Costa2006] in \code{\link{adea-package}}
+efficiency scores, one set of weights for inputs and other for outputs, number of efficient units, variable loads and model load.
+\item solver: The solver used for the resolution of the optimization problem
+}
 }
 \description{
-This function computes an efficiency score for each DMU and a load for each variable in the current model.
-But loads or contributions of input or output variables are constrained between the given values.
-So DMU's efficiencies could change from regular DEA or ADEA model.
+This function calculates an efficiency score for each DMU and computes a load for each variable within the current model.
+However, it's essential to note that the loads or contributions of input or output variables are subject to constraints within specified values.
+As a result, the efficiencies of DMUs may deviate from those obtained in regular DEA or ADEA models.
 }
 \details{
-A variable load is a number between 0 and 1.
-Where 0 means that the contribution of that variable to the efficiency computations is negligible.
-In an ideal case, each input or output variable will have a load of 1 divide by the number of them.
-This model force input and output weights in such a way that final variable loads fall between the given values.
+A variable load is a numerical value between 0 and 1, with 0 signifying that the variable's contribution to the efficiency calculations is negligible.
+In an ideal scenario, each input or output variable would have a load of 1.
+This model enforces input and output weights in a manner that ensures the final variable loads fall within specified values.
+
+In a raw variable selection procedure, it's possible to inadvertently remove a variable from a DEA model, leading to a non-natural model.
+In other cases, there may be political or tactical reasons for certain variables to be considered.
+In a standard DEA model, the weights associated with these variables might be reduced to very small values, effectively rendering their contributions nearly negligible.
+
+The constraints for variable loads in these models prevent such scenarios by ensuring that the contributions of variables reach the desired levels.
+This maintains the integrity and significance of variables in the DEA model.
 
 For more information about loads or ADEA model see \code{\link{adea}}
 }
@@ -58,8 +95,8 @@ If the given limits are too narrow, then the model is infeasible, which will res
 }
 \examples{
 data('cardealers4')
-input <- cardealers4[, 1:2]
-output <- cardealers4[, 3:4]
+input <- cardealers4[, c('Employees', 'Depreciation')]
+output <- cardealers4[, c('CarsSold', 'WorkOrders')]
 
 # Compute adea model
 model <- adea(input, output)
@@ -67,34 +104,45 @@ model
 # Dealer A  Dealer B  Dealer C  Dealer D  Dealer E  Dealer F
 # 0.9915929 1.0000000 0.8928571 0.8653846 1.0000000 0.6515044
 
-# Get model load ratios
-model$load$ratios
-# $input
+# Get input variable loads
+model$loads$input
 # Employees Depreciation
 # 0.6666667    1.3333333
-# $output
+# Get output variable loads
+model$loads$output
 #  CarsSold WorkOrders
 # 1.2663476  0.7336524 
 
 # Compute a constrained adea model to force load between .8 and 1.5
 cmodel <- cadea(input, output, load.min = .8, load.max = 1.5)
 cmodel
-# Dealer A  Dealer B  Dealer C  Dealer D  Dealer E  Dealer F
-# 0.9915929 1.0000000 0.8928571 0.8653846 1.0000000 0.6515044
+#  Dealer A  Dealer B  Dealer C  Dealer D  Dealer E  Dealer F 
+# 0.9915929 1.0000000 0.8928571 0.8653846 1.0000000 0.5920826 
 
-# Get model load ratios
-cmodel$load$ratios
+# Get loads
+cmodel$loads
+# $load
+# [1] 0.8
 # $input
 # Employees Depreciation
 #       0.8          1.2
+# $iinput
+# Employees
+# 1 
 # $output
 # CarsSold WorkOrders
-#      1.2        0.8 
-
+#      1.2        0.8
+# $ioutput
+# WorkOrders
+# 2
+# $load.min
+# [1] 0.8 0.8 0.8 0.8
+# $load.max
+# [1] 1.5 1.5 1.5 1.5
 # See differences of efficiencies in both models
 model$eff - cmodel$eff
 #      Dealer A      Dealer B      Dealer C      Dealer D      Dealer E      Dealer F
-# -2.220446e-16  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  5.942183e-02 
+# -2.220446e-16 -1.332268e-15 -1.110223e-16  2.220446e-16 -1.110223e-16  5.942183e-02 
 }
 \seealso{
 \code{\link{adea-package}}.

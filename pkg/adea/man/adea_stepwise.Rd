@@ -13,34 +13,51 @@ adea_stepwise(
   direction = c("backward", "backward/input", "backward/output"),
   load.critical = 0.5,
   max.steps = ncol(input) + ncol(output) - 2,
+  solver = "auto",
   verbose = 0
 )
 }
 \arguments{
-\item{input}{A matrix or a data frame with the inputs of units to be evaluated, one row for each DMU and one column for each input.}
+\item{input}{A matrix or a data frame containing the inputs of the units to be evaluated, with one row for each DMU and one column for each input.}
 
-\item{output}{A matrix or a data frame with the outputs of units to be evaluated, one row for each DMU and one column for each output.}
+\item{output}{A matrix or a data frame containing the outputs of the units to be evaluated, with one row for each DMU and one column for each output.}
 
-\item{orientation}{Use "input" for input orientation or use "output" for output orientation in DEA model.}
+\item{orientation}{Use "input" for input orientation or "output" for output orientation in DEA model.
+The default is "input".}
 
-\item{load.orientation}{It allows the selection of variables to be included in load analysis.
-Its default value is "inoutput" which means that all input and all output variables will be included. Use "input" or "output" to include only input or output variables in load analysis.}
+\item{load.orientation}{This parameter allows the selection of variables to be included in load analysis. 
+The default is "inoutput" which means that all input and output variables will be included. Use "input" or "output" to include only input or output variables in load analysis.}
 
-\item{name}{An optional descriptive name for the model. It will be shown in print and summary results.}
+\item{name}{An optional descriptive name for the model.
+The default is an empty string. 
+This name will be displayed in printed and summarized results.}
 
-\item{direction}{The direction in which the variables go in and out of the model. Until now, only backward option is implemented.}
+\item{direction}{The direction in which the variables enter or exit the model.
+Currently, only the "backward" option is implemented.}
 
-\item{load.critical}{Minimum values for load.ratios to consider that a variable should be considered in the model. It can be also a vector with two values, the first value input loads and the second for output loads.}
+\item{load.critical}{Minimum values for loads to consider that a variable should be considered in the model. It can be also a vector with two values, the first value input loads and the second for output loads.}
 
 \item{max.steps}{The maximum number of steps allowed.}
 
-\item{verbose}{Use 0 for minimal output, only final model. 1 or more to get detailed information of each step. This option affects only to printed output but not the result.}
+\item{solver}{The solver used by ROI to solve the DEA optimization problem.
+The default is "auto."
+The solver must be installed and capable of solving linear programming problems. 
+Use \code{ROI_installed_solvers()} to list them.}
+
+\item{verbose}{Use 0 for minimal output, displaying only the final model.
+Use 1 or higher values to get detailed information for each step.
+The default is 0.
+This option affects only the printed output and not the result.}
 }
 \value{
 The function returns a DEA model with optimised set of variables.
 }
 \description{
 Stepwise procedure for variable selection in DEA models.
-This is a back end function for adea_hierarchical and adea_parametric functions.
-So, it is not for end user use.
+}
+\details{
+This function serves as a backend utility for variable selection in DEA models and is not intended for end-user use.
+It is used as part of the adea_hierarchical and adea_parametric functions.
+
+This function performs a stepwise procedure for variable selection within DEA models.
 }

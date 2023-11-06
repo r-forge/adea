@@ -9,66 +9,61 @@
 
 Package: adea
 
-Version: 1.3.1
+Version: 1.4.2
 
-Date: 2022-02-09
+Date: 2023-11-06
 
 License: GPL (>= 3)
 }
 
-DEA, that means Data Envelopment Analysis, consider a set of DMUs (Decision Making Units) and computes an efficiency score for each DMU.
-Such score is defined as a weighted ratio between several inputs and outputs values for such DMU.
+Data Envelopment Analysis (DEA) involves evaluating the efficiency of a set of Decision Making Units (DMUs) and calculating a relative efficiency score for each DMU. 
+These scores are determined as a weighted ratio between all inputs and outputs amounts for such DMU.
 
-This package provides an implementation of the ADEA method for variable selection in DEA.
-ADEA methodology includes a new phase in the classical DEA analysis that measures the relative importance of each input and output variable.
-This above-mentioned measure is called load ratio or contribution.
-A load for the whole model is also defined.
-Using such measure, a procedure to select an optimised or relevant set of variables has been developed.
-
-A variable load is a number between 0 and 1.
-Where 0 means that the contribution of that variable to the efficiency values is negligible.
-In an ideal case, each input or output variable will have a load of 1.
-
-As it is usually done in DEA, these loads are computed as its maximum allowable value.
-Using alternative sets of weights, this procedure don't change efficiency scores.
-But because the sum of all of them is 1, when one variable increases its load, any other decrease in value.
-So only the lowest value of all loads has a real meaning.
-This lowest value can be taken as a significance measure of the entire model.
-
-This measure, load, has two important properties that easy its interpretation:
-\itemize{
-   \item It has a bounded range from 0 to the number of input or output, and 1 as its ideal value.
-   \item It is invariant by changes of scale.
-}
-
-ADEA analysis can be done measuring only input variables, in this case ADEA analysis has input \code{load.orientation}.
-output when only output variables are considered.
-And inoutput \code{load.orientation} when all variables in the model are taken into account.
-
-The package is named after its main function.
-adea makes a DEA analysis using alternative optimal solution of the same programs that DEA uses to compute efficiency scores.
-For a detailed description of the maths behind the model, see the references.
-
-The main functions that this package provides are:
-\itemize{
-   \item adea: It makes ADEA analysis giving, efficiency scores for each DMU, a set of weight, and a load for each input and output variable, and also model load.
-   \item cadea: Constrained ADEA analysis to force that variable loads fall in a given range. The efficiencies scores will change in order to allow this.
-   \item adea_load_average: Search for DMU's with higher impact on ADEA model.
-}
+DEA methodology assumes that all DMUs use the same set of inputs to produce the same set of outputs.
 }
 \note{
-The package is ready for translations, so contributions with translated versions of po files will be very welcomed.
+This package is translation-ready, and contributions of translated versions of po files are highly welcome.
 }
+\section{Variable selection}{
+
+
+The selection of input and output variables for inclusion in a DEA model is a crucial aspect, as numerous studies have shown.
+This package offers two variable selection procedures.
+The first is ADEA, which is based on a measure of the relative importance of variables in the entire set of scores.
+For more information on this methodology, see \code{\link{adea}}.
+
+An alternative way to select the variables for the model is by solving a mathematical optimization problem that determines the optimal selection based on some performance criteria.
+\code{\link{fsdea}} function provides an implementation of this procedure.
+}
+
+\section{Function Index}{
+
+
+The main functions provided by this package are:
+\itemize{
+   \item adea: Conducts ADEA analysis, providing efficiency scores for each DMU, a set of weights, and loads for each input and output variable, along with a model load.
+   \item adea_parametric: Does a stepwise analysis of removing variables step by steps. adea_hierarchical works in similar way.
+   \item fsea: Selects an optimal subset of input and output variables based on some performance criteria.
+   \item cadea: Performs Constrained ADEA analysis to enforce variable load constraints within a specified range, resulting in changes to efficiency scores.
+   \item adea_load_average: Identifies DMUs with a higher impact on the ADEA model.
+}
+}
+
 \references{
 A new approach to the bi-dimensional representation of the DEA efficient frontier with multiple inputs and outputs. 
-\emph{Carlos A. Bana e Costa} and \emph{Joao Carlos C. B. Soares de Mello} and \emph{Lidia Angulo Meza}.
+\emph{Carlos A. Bana e Costa} and \emph{Joao Carlos C. B. Soares de Mello}, and \emph{Lidia Angulo Meza}.
 European Journal of Operational Research, 255 (1), pg. 175-186, 2016,
 <DOI:10.1016/j.ejor.2016.05.012>.
 
 Stepwise Selection of Variables in DEA Using Contribution Load.
-\emph{F. Fernandez-Palacin}, \emph{M. A. Lopez-Sanchez} and \emph{M. Munoz-Marquez}.
+\emph{F. Fernandez-Palacin}, \emph{M. A. Lopez-Sanchez}, and \emph{M. Munoz-Marquez}.
 Pesquisa Operacional 38 (1), pg. 1-24, 2018.
 <DOI:10.1590/0101-7438.2018.038.01.0000>.
+
+Feature Selection in Data Envelopment Analysis: A Mathematical Optimization approach.
+\emph{Benitez-Pena, S.}, \emph{Bogetoft, P.}, and \emph{Romero Morales, D.}.
+Omega, Elsevier BV, 96, pp. 102068, 2020.
+<DOI:10.1016/j.omega.2019.05.004>
 
 Methodology for calculating critical values of relevance measures in variable selection methods in data envelopment analysis.
 \emph{Jeyms Villanueva-Cantillo} and \emph{Manuel Munoz-Marquez}.

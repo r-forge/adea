@@ -9,8 +9,8 @@ lp_solve_adea(
   input,
   output,
   eff = NULL,
-  orientation = c("input", "output"),
-  load.orientation = c("inoutput", "input", "output"),
+  orientation,
+  load.orientation,
   solve = FALSE,
   lp = NULL
 )
@@ -19,26 +19,27 @@ lp_solve_cadea(
   input,
   output,
   eff = NULL,
-  orientation = c("input", "output"),
-  load.orientation = c("inoutput", "input", "output"),
+  orientation,
+  load.orientation,
   load.min,
   load.max,
   max.iterations = 25,
-  solve = FALSE,
+  solve = TRUE,
   lp = NULL
 )
 }
 \arguments{
-\item{input}{A matrix or a data frame with the inputs of units to be evaluated, one row for each DMU and one column for each input.}
+\item{input}{A matrix or a data frame containing the inputs of the units to be evaluated, with one row for each DMU and one column for each input.}
 
-\item{output}{A matrix or a data frame with the outputs of units to be evaluated, one row for each DMU and one column for each output.}
+\item{output}{A matrix or a data frame containing the outputs of the units to be evaluated, with one row for each DMU and one column for each output.}
 
 \item{eff}{The efficiency scores from dea analysis.}
 
-\item{orientation}{Use "input" for input orientation or use "output" for output orientation in DEA model.}
+\item{orientation}{Use "input" for input orientation or "output" for output orientation in DEA model.
+The default is "input".}
 
-\item{load.orientation}{It allows the selection of variables to be included in load analysis.
-Its default value is "inoutput" which means that all input and all output variables will be included. Use "input" or "output" to include only input or output variables in load analysis.}
+\item{load.orientation}{This parameter allows the selection of variables to be included in load analysis. 
+The default is "inoutput" which means that all input and output variables will be included. Use "input" or "output" to include only input or output variables in load analysis.}
 
 \item{solve}{If TRUE then solve dea model}
 

@@ -7,11 +7,12 @@
 lp_solve_dea(input, output, orientation = c("input", "output"), solve = FALSE)
 }
 \arguments{
-\item{input}{A matrix or a data frame with the inputs of units to be evaluated, one row for each DMU and one column for each input.}
+\item{input}{A matrix or a data frame containing the inputs of the units to be evaluated, with one row for each DMU and one column for each input.}
 
-\item{output}{A matrix or a data frame with the outputs of units to be evaluated, one row for each DMU and one column for each output.}
+\item{output}{A matrix or a data frame containing the outputs of the units to be evaluated, with one row for each DMU and one column for each output.}
 
-\item{orientation}{Use "input" for input orientation or use "output" for output orientation in DEA model.}
+\item{orientation}{Use "input" for input orientation or "output" for output orientation in DEA model.
+The default is "input".}
 
 \item{solve}{If TRUE then solve dea model}
 }

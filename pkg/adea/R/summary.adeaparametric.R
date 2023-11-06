@@ -19,7 +19,7 @@ summary.adeaparametric <- function(object, ...) {
     } else {
         if (!is.numeric(eff.tolerance) || eff.tolerance < 0 || eff.tolerance > 1) stop(paste('summary.adeaparametric:summary.adeaparametric.R:18', gettext('eff.tolerance is not a number between 0 and 1')))
     }
-                                        # Do the job
+    ## Do the job
     l <- summary.adeahierarchical(object, eff.tolerance = eff.tolerance)
     class(l) <- 'summary.adeaparametric'
     l

@@ -8,7 +8,6 @@
 #' @aliases roi_solve_adea
 #' @keywords internal
 #' @inheritParams adea
-#' @param solve If TRUE then solve adea model
 #' @param solver Any of the available solver that will be used by ROI to solve the optimization problem. Use <code>ROI_installed_solvers()</code> to list them.
 #' @param lp Can be a DEA lp or ADEA lp
 #' @return list(lp, status, solver, selected, ux, vy, eff)

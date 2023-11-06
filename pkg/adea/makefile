@@ -1,5 +1,5 @@
 package := adea
-version := 1.4.1
+version := 1.4.2
 R := $(wildcard R/*.R)
 
 RmdVignettes := $(wildcard vignettes/*.Rmd)
