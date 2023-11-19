@@ -15,8 +15,7 @@
 #'
 #' @name fsdea
 #' @aliases fsdea
-#' @keywords DEA
-#' @concept Date Envelopment Analysis
+#' @concept Data Envelopment Analysis
 #' @concept Feature selection
 #' @concept Variable selection
 #' @inheritParams adea

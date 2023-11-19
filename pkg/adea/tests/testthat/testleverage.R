@@ -5,7 +5,7 @@ library('testthat')
 data('cardealers4')
 
 test_that("Test adea_load_leverage: General case (default orientation)", {
-    ## skip_on_cran()
+    skip_on_cran()
     sol <- try(adea_load_leverage(input = cardealers4[, c('Employees', 'Depreciation')], output = cardealers4[, c('CarsSold', 'WorkOrders')]))
     expect_s3_class(sol, "adealoadleverage")
     expect_length(sol, 3)

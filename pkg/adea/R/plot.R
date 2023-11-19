@@ -2,7 +2,7 @@
 #'
 #' @aliases plot plot,adea-method
 #' @docType methods
-#' @keywords DEA ADEA plot
+#' @keywords plot
 #'
 #' @param x ADEA object to be plotted
 #' @param main if not null then it is used as main in plot.

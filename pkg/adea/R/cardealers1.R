@@ -4,7 +4,7 @@
 #' 
 #' @name cardealers1
 #' @docType data
-#' @keywords data DEA
+#' @keywords data
 #' @seealso See also \code{\link{adea-package}}.
 #' 
 #' @section Usage:

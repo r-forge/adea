@@ -3,7 +3,7 @@
 #' An example dataset with six car dealers to be use in DEA (Data envelopment analysis).
 #' @docType data
 #' @name cardealers4
-#' @keywords data DEA
+#' @keywords data
 #' @seealso See also \code{\link{adea-package}}.
 #'
 #' @section Usage:

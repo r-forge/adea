@@ -10,7 +10,8 @@
 #'
 #' @name dea
 #' @aliases dea
-#' @keywords DEA, Data Envelopment Analysis
+#' @keywords DEA
+#' @concept Data Envelopment Analysis
 #' @inheritParams adea
 #' @return This function return a dea class object with the following named members:
 #' \itemize{

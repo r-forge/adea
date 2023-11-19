@@ -51,6 +51,9 @@ MMM -->
 
 <p>Another feature provided allows us to find which DMUs cause the most significant changes in the results so that we can handle them properly.</p>
 
+<p>The package is available on cran, so you can install it as any other package.
+The package version in this repository may be newer than the one available in cran. You can install the version available here using the instruction <code>install.packages('adea', repos = c('http://R-Forge.R-project.org/', 'https://cran.r-project.org/'), dependencies = TRUE)</code>.</p>
+
 <p>More information in <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>r-forge project summary page</strong></a> or in <a href="http://knuth.uca.es/moodle/course/view.php?id=74&lang=en">project page</a>.</p>
 
 <p><b>References:</b>
@@ -72,6 +75,9 @@ El paquete proporciona dos funciones para hacerlo paso a paso. </p>
 <p>A veces, razones externas al análisis requieren que las contribuciones de las variables al DEA se restrinjan en un rango. También se proporciona otra función para este propósito.</p>
 
 <p> Otra función proporcionada permite encontrar qué DMUs causan los cambios más significativos en los resultados para tratarlas adecuadamente.</p>
+
+<p>El paquete está disponible en cran, por lo que puede ser instalado como cualquier otro paquete.
+La versi&oacute;n del paquete en este repositorio puede ser m&aacute;s reciente que la disponible en cran. Puede instalar la versi&oacute;n disponible aqu&iacute; usando la instrucci&oacute;n <code>install.packages('adea', repos = c('http://R-Forge.R-project.org', 'https://cran.r-project.org/'), dependencies = TRUE)</code>.</p>
 
 <p>Más información en <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>r-forge project summary page</strong></a> or in <a href="http://knuth.uca.es/moodle/course/view.php?id=74&lang=es">project page</a>.</p>
 
