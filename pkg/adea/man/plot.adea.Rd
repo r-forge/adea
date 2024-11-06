@@ -66,6 +66,4 @@ plot(adea)
 \seealso{
 \code{\link{adea}}
 }
-\keyword{ADEA}
-\keyword{DEA}
 \keyword{plot}

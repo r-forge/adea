@@ -12,11 +12,13 @@ Imports:
     graphics,
     knitr,
     lpSolveAPI,
+    parallel,
+    parallelly,
     ROI,
     slam
 VignetteBuilder: knitr
-Version: 1.4.5
-Date: 2023-11-14
+Version: 1.5.1
+Date: 2023-11-27
 Encoding: UTF-8
 ByteCompile: true
 Title: Alternate DEA Package

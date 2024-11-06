@@ -30,7 +30,7 @@ build_fsdea <- function(input, output, orientation = c('input', 'output'), ninpu
         lp <- roi_build_dea(input = input, output = output, orientation = orientation)
     } else {
         ## Paranoid check
-        cat('build_fsdea:build_fsdea.R:38: debug: test result', attr(lp, 'adea', exact = TRUE)$lp == 'roi_dea', '\n')
+        ## cat('build_fsdea:build_fsdea.R:33: debug: test result', attr(lp, 'adea', exact = TRUE)$lp == 'roi_dea', '\n')
     }
     
     ## If not missed check ninputs values

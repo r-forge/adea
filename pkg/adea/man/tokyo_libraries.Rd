@@ -35,5 +35,4 @@ data('tokyo_libraries')
 \seealso{
 See also \code{\link{adea-package}}.
 }
-\keyword{DEA}
 \keyword{data}

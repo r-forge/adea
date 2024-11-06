@@ -33,5 +33,4 @@ data('cardealers3')
 \seealso{
 See also \code{\link{adea-package}}.
 }
-\keyword{DEA}
 \keyword{data}

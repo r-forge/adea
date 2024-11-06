@@ -11,7 +11,8 @@ adea_load_leverage(
   load.orientation = c("inoutput", "input", "output"),
   load.diff = 0.05,
   ndel = 1,
-  nmax = 0
+  nmax = 0,
+  solver = "auto"
 )
 }
 \arguments{
@@ -30,6 +31,11 @@ The default is "inoutput" which means that all input and output variables will b
 \item{ndel}{Maximum number of units to drop out in each try.}
 
 \item{nmax}{Maximum number of DMU sets to include in results. 0 for no limit.}
+
+\item{solver}{The solver used by ROI to solve the DEA optimization problem.
+The default is "auto."
+The solver must be installed and capable of solving linear programming problems. 
+Use \code{ROI_installed_solvers()} to list them.}
 }
 \value{
 The function returns a list with the following named members:

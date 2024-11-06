@@ -41,3 +41,5 @@ vignettes/*.pdf
 # Other local working files
 *~
 .svn
+
+www

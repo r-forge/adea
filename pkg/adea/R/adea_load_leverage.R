@@ -44,17 +44,21 @@
 #' @note This function has to solve a large number of large linear programs that grows with DMUs. So computation time required may be very large, be patient.
 #' @importFrom combinat combn
 #' @importFrom combinat permn
+#' @importFrom parallel parApply
+#' @importFrom parallel stopCluster
+#' @importFrom parallelly availableCores
+#' @importFrom parallelly makeClusterPSOCK
 #' @export
-adea_load_leverage <- function(input, output, orientation = c('input', 'output'), load.orientation = c('inoutput', 'input', 'output'), load.diff = .05, ndel = 1, nmax = 0)
+adea_load_leverage <- function(input, output, orientation = c('input', 'output'), load.orientation = c('inoutput', 'input', 'output'), load.diff = .05, ndel = 1, nmax = 0, solver = 'auto')
 {
-    .output <- function() {
-        cat('n:', next.index, ' ')
-        cat(paste0(gettext('loads'), ':'), .loads[next.index])
-        cat(paste0(gettext('loads.diff'), ':'), .loads.diff[next.index])
-        cat(paste0(gettext('index'), ': {'), paste0(dmu.indexs[next.index, 1:k], collapse = ', '), '} ')
-        cat(paste0(gettext('names'), ': {'), paste0(rownames(input)[dmu.indexs[next.index, 1:k]], collapse = ', '), '}')
-        cat('\n')
-    }
+    ## .output <- function() {
+    ##    cat('n:', next.index, ' ')
+    ##    cat(paste0(gettext('loads'), ':'), .loads[next.index])
+    ##    cat(paste0(gettext('loads.diff'), ':'), .loads.diff[next.index])
+    ##    cat(paste0(gettext('index'), ': {'), paste0(dmu.indexs[next.index, 1:k], collapse = ', '), '} ')
+    ##    cat(paste0(gettext('names'), ': {'), paste0(rownames(input)[dmu.indexs[next.index, 1:k]], collapse = ', '), '}')
+    ##    cat('\n')
+    ##}
 
     ## Check input
     orientation <- match.arg(orientation)
@@ -63,54 +67,87 @@ adea_load_leverage <- function(input, output, orientation = c('input', 'output')
 
     ## Check input and output
     err <- adea_check(input = input, output = output)
-    if (!isTRUE(err)) stop(err)    
+    if (!isTRUE(err)) stop(err)
 
-    ## Setup vars to store results
-    .loads <- c()
-    .loads.diff <- c()
-    dmu.indexs <- matrix(NA, ncol = ndel, nrow = 0)
-    next.index <- 1
+    ## Check ndel
+    ndel <- as.numeric(ndel)
+    if (is.na(ndel) || ndel < 1) stop('The number of units to drop (ndel) must be an integer number at least 1. ')
 
     ## Normalise input
     input <- adea_setup(input, output)
     output <- input$output
     input <- input$input
-    
+
+    ##
     ## Compute initial model
-    iload.level <- adea(input, output, orientation = orientation, load.orientation = load.orientation)$loads$load
-    
+    ## This instruction has been replace by the following block
+    ## iload.level <- adea_(input, output, orientation = orientation, load.orientation = load.orientation, solver = solver, name = '')$loads$load
+    ## cat("debug:adea_load_leverage.R:84: iload.level: ", iload.level, "\n")
+
+    ## Compute initial model
+    .adea <- roi_solve_adea(input, output, orientation = orientation, load.orientation = load.orientation, solver = solver)
+
+    ## Compute initial load level
+    iload.level <- adea_loads(input, output, ux = .adea$ux, vy = .adea$vy, load.orientation = load.orientation)$load
+    ## cat("debug:adea_load_leverage.R:81: iload.level: ",  iload.level, "\n")
+
+    ## Intialize variables
+    loads <- numeric(0)
+    loads.diff <- numeric(0)
+    dmu.indexs <- matrix(ncol = 0, nrow = ndel)
+
+    ## Create a cluster
+    cl <- makeClusterPSOCK(availableCores())
+
     ## Main loop in size
-    for (k in 1:ndel) {
-        ## Iterates in DMU's
-        ic <- combn(1:nrow(input), k)
-        for (j in 1:ncol(ic)) {
-            i <- ic[,j]
-            load.i <- adea(input[-i,], output[-i,], orientation = orientation, load.orientation = load.orientation)$loads$load
-            load.diff.i <-  abs(iload.level - load.i)
-            if (load.diff.i > load.diff) {
-                .loads[next.index] <- load.i
-                .loads.diff[next.index] <- load.diff.i
-                dmu.indexs <- rbind(dmu.indexs, NA)
-                dmu.indexs[next.index, 1:k] <- i
-                next.index <- next.index + 1
-            }
+    for(k in 1:ndel) {
+        ## Compute combinations
+        .combn <- combn(1:nrow(input), k)
+        ## Compute loads
+        .loads <- parApply(cl = cl, .combn, MARGIN = 2, FUN = adea_load_leverage_i, input = input, output = output, orientation = orientation, load.orientation = load.orientation, solver = solver)
+        ## Compute differences in loads
+        .loads.diff <- abs(iload.level - .loads)
+        ## Compute index
+        .index.diff <- (.loads.diff > load.diff)
+        ## Filter and append the results
+        if (sum(.index.diff) > 0) {
+            loads <- c(loads, .loads[.index.diff])
+            loads.diff <- c(loads.diff, .loads.diff[.index.diff])
+            .dmu.indexs <- matrix(NA, ncol = sum(.index.diff), nrow = ndel)
+            .dmu.indexs[1:k, ] <- .combn[, .index.diff]
+            dmu.indexs <- cbind(dmu.indexs, .dmu.indexs)
         }
     }
 
-    ## Return result
-    if (length(.loads.diff) > 1) {
-        index <- sort(.loads.diff, decreasing = TRUE, index.return = TRUE)
+    ## Stop the cluster
+    stopCluster(cl)
+    
+    ## Return results
+    if (length(loads.diff) > 1) {
+        index <- sort(loads.diff, decreasing = TRUE, index.return = TRUE)
         index <- index$ix
         if (nmax > 1 && nmax < length(index)) index <- index[1:nmax]
-        .loads <- .loads[index]
-        .loads.diff <- .loads.diff[index]
-        dmu.indexs <- dmu.indexs[index, ]
+        loads <- loads[index]
+        loads.diff <- loads.diff[index]
+        dmu.indexs <- dmu.indexs[, index]
     } else {
-        if (length(.loads.diff) == 0) {
+        if (length(loads.diff) == 0) {
             dmu.indexs <- NULL
         }
     }
-    result <- list(loads = .loads, loads.diff = .loads.diff, dmu.indexs = dmu.indexs)
+    
+    ## Build return list
+    result <- list(loads = loads, loads.diff = loads.diff, dmu.indexs = dmu.indexs)
     class(result) <- 'adealoadleverage'
     result
+}
+
+## Auxiliary function for adea_load_leverage
+## eindex = Set of DMU to exclude
+adea_load_leverage_i <- function(eindex, input, output, orientation, load.orientation, solver)
+{
+    inputi <- input[-eindex,]
+    outputi <- output[-eindex,]
+    .adea <- roi_solve_adea(inputi, outputi, orientation = orientation, load.orientation = load.orientation, solver = solver)
+    adea_loads(inputi, outputi, ux = .adea$ux, vy = .adea$vy, load.orientation = load.orientation)$load
 }

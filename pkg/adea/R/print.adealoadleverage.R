@@ -9,7 +9,7 @@
 #' @export
 print.adealoadleverage <- function(x, ...) {
     DMUs <- x$dmu.indexs
-    if (!is.null(ncol(DMUs))) DMUs <- apply(DMUs, 1, FUN = function(x) paste(x[!is.na(x)], collapse = ", "))
+    if (!is.null(ncol(DMUs))) DMUs <- apply(DMUs, 2, FUN = function(x) paste(x[!is.na(x)], collapse = ", "))
     s <- data.frame(load = x$loads, load.diff = x$loads.diff, DMUs = DMUs)
     print(s, ...)
     invisible(x)

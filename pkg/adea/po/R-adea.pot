@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: adea 1.4.5\n"
-"POT-Creation-Date: 2023-11-14 12:34\n"
+"Project-Id-Version: adea 1.5.1\n"
+"POT-Creation-Date: 2023-11-24 13:59\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,19 +49,10 @@ msgstr ""
 msgid "Unequal number of rows in input and eff."
 msgstr ""
 
-msgid "loads"
-msgstr ""
-
-msgid "loads.diff"
-msgstr ""
-
-msgid "index"
-msgstr ""
-
-msgid "names"
-msgstr ""
-
 msgid "adea_load_leverage: nmax must be numeric >= 0"
+msgstr ""
+
+msgid "The number of units to drop (ndel) must be an integer number at least 1."
 msgstr ""
 
 msgid "adea_loads:"

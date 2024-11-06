@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: adea 0.1\n"
-"POT-Creation-Date: 2023-11-05 19:17\n"
+"POT-Creation-Date: 2023-11-24 13:59\n"
 "PO-Revision-Date: 2023-06-05 12:17+0200\n"
 "Last-Translator: Manuel Munoz-Marquez <manuel.munoz@uca.es>\n"
 "Language-Team: Manuel Munoz-Marquez\n"
@@ -54,20 +54,12 @@ msgstr "Valores no numéricos en eff."
 msgid "Unequal number of rows in input and eff."
 msgstr "Desigual número de filas en input y eff."
 
-msgid "loads"
-msgstr "cargas"
-
-msgid "loads.diff"
-msgstr ""
-
-msgid "index"
-msgstr "índice"
-
-msgid "names"
-msgstr "nombres"
-
 msgid "adea_load_leverage: nmax must be numeric >= 0"
 msgstr "adea_load_leverage: nmax debe ser un número >= 0"
+
+msgid ""
+"The number of units to drop (ndel) must be an integer number at least 1."
+msgstr ""
 
 msgid "adea_loads:"
 msgstr ""
@@ -321,6 +313,15 @@ msgstr ""
 
 msgid "summary.fsdea:summary.fsdea.R:35"
 msgstr ""
+
+#~ msgid "loads"
+#~ msgstr "cargas"
+
+#~ msgid "index"
+#~ msgstr "índice"
+
+#~ msgid "names"
+#~ msgstr "nombres"
 
 #~ msgid ""
 #~ "Internal error: The minimum value in first and second stage don't agree."
