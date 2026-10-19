@@ -26,6 +26,6 @@ Another feature provided allows us to find which DMUs cause the most significant
 ## More info
 
 
-  * [Project Home page](http://knuth.uca.es/adea/)
+  * [Project Home page](http://knuth.uca.es/dea/)
   * [ADEA package for R at cran](https://cran.r-project.org/web/packages/adea/)
   * [ADEA package for R at R-forgeURL](https://r-forge.r-project.org/projects/adea/)

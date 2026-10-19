@@ -51,5 +51,5 @@ inst/doc/%.html: inst/doc/%.Rmd $(R)
 	R -e "rmarkdown::render('$<')"
 inst/doc/index.R: $(R) $(RmdVignettes)
 	R -e "devtools::build_vignettes('.', clean = FALSE, install = FALSE)"
-%.testthat.log: tests/testthat/%.R
+%.testthat.log: tests/testthat/%.R ~/R_LIBS/$(package)
 	Rscript $< | tee $@

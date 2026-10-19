@@ -8,9 +8,9 @@
 
 Package: adea
 
-Version: 1.5.2
+Version: 1.5.1
 
-Date: 2024-11-06
+Date: 2023-11-27
 
 License: GPL (>= 3)
 }

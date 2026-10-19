@@ -1,7 +1,7 @@
 #' Data Envelopment Analysis: Variable Selection, Constrained ADEA and Leverage Units
 #'
 #' @aliases adea-package
-#' @docType package
+#'
 #' @name adea-package
 #'
 #' @description

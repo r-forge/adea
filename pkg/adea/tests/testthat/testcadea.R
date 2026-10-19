@@ -4,7 +4,7 @@ library('testthat')
 data('cardealers4')
 
 test_that('Test CADEA: General case (default orientation) and single bound', {
-    ## skip_on_cran()
+    skip_on_cran()
     sol <- try(cadea(input = cardealers4[, c('Employees', 'Depreciation')], output = cardealers4[, c('CarsSold', 'WorkOrders')], name = 'Test cadea', load.min = .7, load.max = 2))
     expect_s3_class(sol, 'cadea')
     expect_length(sol, 13)

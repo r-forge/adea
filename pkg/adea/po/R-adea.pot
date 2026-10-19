@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: adea 1.5.1\n"
-"POT-Creation-Date: 2023-11-24 13:59\n"
+"POT-Creation-Date: 2026-10-19 16:39\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,16 +16,16 @@ msgstr ""
 msgid "output should be a numeric vector, a numeric matrix or a numeric dataframe."
 msgstr ""
 
-msgid "NA values in input are not allowed."
+msgid "NA values in input not allowed."
 msgstr ""
 
-msgid "NA values in output are not allowed."
+msgid "NA values in output not allowed."
 msgstr ""
 
 msgid "Unequal number of rows in input and output."
 msgstr ""
 
-msgid "ux and vy should be provided together."
+msgid "ux and vy should provided together."
 msgstr ""
 
 msgid "ux should be NULL, a vector, a matrix or a dataframe."
@@ -47,6 +47,15 @@ msgid "Non numeric values in eff."
 msgstr ""
 
 msgid "Unequal number of rows in input and eff."
+msgstr ""
+
+msgid "NA values in input are not allowed."
+msgstr ""
+
+msgid "NA values in output are not allowed."
+msgstr ""
+
+msgid "ux and vy should be provided together."
 msgstr ""
 
 msgid "adea_load_leverage: nmax must be numeric >= 0"
